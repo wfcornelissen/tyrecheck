@@ -1,0 +1,39 @@
+CLI Tool
+- Exit
+(Exits CLI tool)
+
+- Help
+(Displays help menu)
+
+- Lists
+(Opens lists menu)
+(Will need a back command to get back to main menu)
+*Tyre (Prints list of tyres. Will need a pagination function)
+*Truck (Prints list of trucks)
+*Trailer (Prints list of Trailers)
+*Driver (Prints list of drivers)
+*Work Done
+*Inspection Logs
+
+lists --tyre/truck/etc?
+
+- Add
+(Adds specified item to database)
+*Tyre
+*Trailer
+*Truck
+
+- Remove
+*Tyre
+*Trailer
+*Truck
+
+- Work Done
+*Swop
+*Remove
+*Fit
+*Strip
+*Check
+
+
+
