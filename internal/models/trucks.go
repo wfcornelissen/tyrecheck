@@ -1,23 +1,36 @@
 package models
 
+import "fmt"
+
 type Truck struct {
-	HitchedTo string
-	FleetNum  string
-	VIN       string
-	Reg       string
-	Make      string
-	Model     string
-	Year      int
-	Tyres     []Tyre
+	FleetNum string
+	VIN      string
+	Reg      string
+	Make     string
+	Model    string
+	Year     int
+	Tyres    []Tyre
 }
 
 type Trailer struct {
-	HitchedTo string
-	FleetNum  string
-	VIN       string
-	Reg       string
-	Make      string
-	Model     string
-	Year      int
-	Tyres     []Tyre
+	FleetNum string
+	VIN      string
+	Reg      string
+	Make     string
+	Model    string
+	Year     int
+	Tyres    []Tyre
+}
+
+type Combination struct {
+	Truck   Truck
+	Trailer Trailer
+}
+
+func (t Truck) String() string {
+	return fmt.Sprintf("Fleet Number: %s\nVIN: %s\nRegistration: %s\nMake: %s\nModel: %s\nYear: %d", t.FleetNum, t.VIN, t.Reg, t.Make, t.Model, t.Year)
+}
+
+func (t Trailer) String() string {
+	return fmt.Sprintf("Fleet Number: %s\nVIN: %s\nRegistration: %s\nMake: %s\nModel: %s\nYear: %d", t.FleetNum, t.VIN, t.Reg, t.Make, t.Model, t.Year)
 }

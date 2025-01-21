@@ -1,9 +1,12 @@
+/*
+Copyright © 2025 NAME HERE <EMAIL ADDRESS>
+*/
 package main
 
 import (
-	"fmt"
+	"github.com/wfcornelissen/tyrecheck/internal/cmd"
 )
 
 func main() {
-	fmt.Println("Hello, World!")
+	cmd.Execute()
 }
