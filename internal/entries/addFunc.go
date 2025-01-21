@@ -23,3 +23,10 @@ func readInt(prompt string) int {
 	num, _ := strconv.Atoi(input)
 	return num
 }
+
+func readFloat(prompt string) float64 {
+	fmt.Print(prompt + ": ")
+	var input float64
+	fmt.Scanln(&input)
+	return input
+}
