@@ -19,6 +19,7 @@ var AddCmd = &cobra.Command{
 
 func init() {
 	AddCmd.AddCommand(addTruckCmd)
+	AddCmd.AddCommand(addTrailerCmd)
 
 	// Here you will define your flags and configuration settings.
 

@@ -1,33 +1,12 @@
 package entries
 
 import (
-	"bufio"
 	"database/sql"
 	"fmt"
-	"os"
-	"os/exec"
-	"strconv"
-	"strings"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
-
-func readString(prompt string) string {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print(prompt)
-	input, _ := reader.ReadString('\n')
-	return strings.TrimSpace(input)
-}
-
-func readInt(prompt string) int {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print(prompt)
-	input, _ := reader.ReadString('\n')
-	input = strings.TrimSpace(input)
-	num, _ := strconv.Atoi(input)
-	return num
-}
 
 func AddTruck() (models.Truck, error) {
 	truck := models.Truck{
@@ -40,7 +19,6 @@ func AddTruck() (models.Truck, error) {
 		Tyres:    []models.Tyre{},
 	}
 	if !ConfirmEntry(truck) {
-		exec.Command("clear").Run()
 		truck, err := AddTruck()
 		if err != nil {
 			return models.Truck{}, err
