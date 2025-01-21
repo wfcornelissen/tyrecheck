@@ -1,6 +1,3 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
 package add
 
 import (
@@ -14,7 +11,16 @@ import (
 var addTruckCmd = &cobra.Command{
 	Use:   "truck",
 	Short: "Adds a truck to the database",
-	Long:  ``,
+	Long: `Starts function that asks for attributes of a truck that is 
+	not already in the database.
+	
+	attributes are:
+	Fleet Number
+	VIN
+	Registration Number
+	Make
+	Model
+	Year`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("truck called") //Debug
 		_, err := entries.AddTruck()

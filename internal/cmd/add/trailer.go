@@ -13,13 +13,17 @@ import (
 // trailerCmd represents the trailer command
 var addTrailerCmd = &cobra.Command{
 	Use:   "trailer",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Add a trailer to the database",
+	Long: `Starts function that asks for attributes of a trialer that is 
+	not already in the database.
+	
+	attributes are:
+	Fleet Number
+	Vin
+	Registration Number
+	Make
+	Model
+	Year`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("trailer called")
 		_, err := entries.AddTrailer()

@@ -10,13 +10,15 @@ import (
 func AddTyre() (models.Tyre, error) {
 	fmt.Println("tyre called")
 	tyre := models.Tyre{
-		ID:       readString("Tyre ID: "),
-		Size:     readString("Tyre Size: "),
-		Brand:    readString("Tyre Brand: "),
-		Supplier: readString("Tyre Supplier: "),
-		Price:    readFloat("Tyre Price: "),
-		Position: readInt("Tyre Position: "),
-		Location: readString("Tyre Location: "),
+		ID:        readString("Tyre ID: "),
+		Size:      readString("Tyre Size: "),
+		Brand:     readString("Tyre Brand: "),
+		Supplier:  readString("Tyre Supplier: "),
+		Price:     readFloat("Tyre Price: "),
+		Position:  readInt("Tyre Position: "),
+		Location:  readString("Tyre Location: "),
+		State:     readString("Tyre State: "),
+		Condition: readString("Tyre Condition: "),
 	}
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()
@@ -39,15 +41,15 @@ func UploadTyreToDb(tyre models.Tyre) error {
 	}
 	defer db.Close()
 
-	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT)")
+	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT, state TEXT, condition TEXT)")
 
-	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location) VALUES (?, ?, ?, ?, ?, ?, ?)")
+	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer record.Close()
 
-	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location)
+	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location, tyre.State, tyre.Condition)
 	if err != nil {
 		return err
 	}
