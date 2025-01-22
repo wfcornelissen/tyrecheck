@@ -13,13 +13,17 @@ import (
 // tyreCmd represents the tyre command
 var tyreCmd = &cobra.Command{
 	Use:   "tyre",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Calls the tyre entry function",
+	Long: `Is used as subcommand for add to call
+	the tyre entry function.
+	
+	It will ask for the following information:
+	- Tyre size
+	- Tyre type
+	- Tyre brand
+	- Tyre position
+	- Tyre condition
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("tyre called")
 		entries.AddTyre()

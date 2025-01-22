@@ -12,20 +12,17 @@ import (
 // tyreStateCmd represents the tyreState command
 var tyreStateCmd = &cobra.Command{
 	Use:   "tyreState",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Calls the tyre state entry function",
+	Long: `Used as a subcommand for edit.
+	Calls the tyre state entry function which asks for the tyre state.`,
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("tyreState called")
 	},
 }
 
 func init() {
-	editCmd.AddCommand(tyreStateCmd)
+	EditCmd.AddCommand(tyreStateCmd)
 
 	// Here you will define your flags and configuration settings.
 

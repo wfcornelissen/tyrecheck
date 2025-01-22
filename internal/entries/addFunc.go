@@ -8,14 +8,14 @@ import (
 	"strings"
 )
 
-func readString(prompt string) string {
+func ReadString(prompt string) string {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print(prompt)
 	input, _ := reader.ReadString('\n')
 	return strings.TrimSpace(input)
 }
 
-func readInt(prompt string) int {
+func ReadInt(prompt string) int {
 	reader := bufio.NewReader(os.Stdin)
 	fmt.Print(prompt)
 	input, _ := reader.ReadString('\n')
@@ -24,7 +24,7 @@ func readInt(prompt string) int {
 	return num
 }
 
-func readFloat(prompt string) float64 {
+func ReadFloat(prompt string) float64 {
 	fmt.Print(prompt + ": ")
 	var input float64
 	fmt.Scanln(&input)

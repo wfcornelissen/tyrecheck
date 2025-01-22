@@ -10,15 +10,15 @@ import (
 func AddTyre() (models.Tyre, error) {
 	fmt.Println("tyre called")
 	tyre := models.Tyre{
-		ID:        readString("Tyre ID: "),
-		Size:      readString("Tyre Size: "),
-		Brand:     readString("Tyre Brand: "),
-		Supplier:  readString("Tyre Supplier: "),
-		Price:     readFloat("Tyre Price: "),
-		Position:  readInt("Tyre Position: "),
-		Location:  readString("Tyre Location: "),
-		State:     readString("Tyre State: "),
-		Condition: readString("Tyre Condition: "),
+		ID:        ReadString("Tyre ID: "),
+		Size:      ReadString("Tyre Size: "),
+		Brand:     ReadString("Tyre Brand: "),
+		Supplier:  ReadString("Tyre Supplier: "),
+		Price:     ReadFloat("Tyre Price: "),
+		Position:  ReadInt("Tyre Position: "),
+		Location:  ReadString("Tyre Location: "),
+		State:     ReadString("Tyre State: "),
+		Condition: ReadString("Tyre Condition: "),
 	}
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()

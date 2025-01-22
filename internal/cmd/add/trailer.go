@@ -13,11 +13,11 @@ import (
 // trailerCmd represents the trailer command
 var addTrailerCmd = &cobra.Command{
 	Use:   "trailer",
-	Short: "Add a trailer to the database",
-	Long: `Starts function that asks for attributes of a trialer that is 
-	not already in the database.
+	Short: "Calls the trailer entry function",
+	Long: `Is used as subcommand for add to call
+	the trailer entry function.
 	
-	attributes are:
+	It will ask for the following information:
 	Fleet Number
 	Vin
 	Registration Number

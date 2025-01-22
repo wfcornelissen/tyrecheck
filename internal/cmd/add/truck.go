@@ -10,11 +10,11 @@ import (
 // truckCmd represents the truck command
 var addTruckCmd = &cobra.Command{
 	Use:   "truck",
-	Short: "Adds a truck to the database",
-	Long: `Starts function that asks for attributes of a truck that is 
-	not already in the database.
+	Short: "Calls the truck entry function",
+	Long: `Is used as subcommand for add to call
+	the truck entry function.
 	
-	attributes are:
+	It will ask for the following information:
 	Fleet Number
 	VIN
 	Registration Number

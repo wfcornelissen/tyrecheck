@@ -7,25 +7,24 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
 // tyreConditionCmd represents the tyreCondition command
 var tyreConditionCmd = &cobra.Command{
 	Use:   "tyreCondition",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Calls the tyre condition entry function",
+	Long: `Used as a subcommand for edit.
+	Calls the tyre condition entry function which asks for the tyre condition.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("tyreCondition called")
+		TyreID := entries.ReadString("Enter the tyre ID: ")
+		entries.EditCondition(TyreID)
 	},
 }
 
 func init() {
-	editCmd.AddCommand(tyreConditionCmd)
+	EditCmd.AddCommand(tyreConditionCmd)
 
 	// Here you will define your flags and configuration settings.
 

@@ -7,24 +7,25 @@ import (
 )
 
 // editCmd represents the edit command
-var editCmd = &cobra.Command{
+var EditCmd = &cobra.Command{
 	Use:   "edit",
 	Short: "Edit a tyre in the database",
 	Long: `Starts function that asks for attributes of a tyre that is 
 	already in the database.
 	
 	attributes are:
-	Tyre State
 	Tyre Condition
+	Tyre Location
 	Tyre Position
-	Tyre Location`,
+	Tyre State
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("edit called")
 	},
 }
 
 func init() {
-
+	EditCmd.AddCommand(tyreConditionCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

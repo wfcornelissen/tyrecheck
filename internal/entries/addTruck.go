@@ -10,12 +10,12 @@ import (
 
 func AddTruck() (models.Truck, error) {
 	truck := models.Truck{
-		FleetNum: readString("Enter fleet number: "),
-		VIN:      readString("Enter VIN: "),
-		Reg:      readString("Enter registration: "),
-		Make:     readString("Enter make: "),
-		Model:    readString("Enter model: "),
-		Year:     readInt("Enter year: "),
+		FleetNum: ReadString("Enter fleet number: "),
+		VIN:      ReadString("Enter VIN: "),
+		Reg:      ReadString("Enter registration: "),
+		Make:     ReadString("Enter make: "),
+		Model:    ReadString("Enter model: "),
+		Year:     ReadInt("Enter year: "),
 		Tyres:    []models.Tyre{},
 	}
 	if !ConfirmEntry(truck) {
