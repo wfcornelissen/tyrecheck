@@ -9,5 +9,5 @@ type Tyre struct {
 	Position  int
 	Location  string
 	State     string
-	Condition string
+	Condition int
 }

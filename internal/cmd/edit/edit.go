@@ -25,7 +25,6 @@ var EditCmd = &cobra.Command{
 }
 
 func init() {
-	EditCmd.AddCommand(tyreConditionCmd)
 	// Here you will define your flags and configuration settings.
 
 	// Cobra supports Persistent Flags which will work for this command

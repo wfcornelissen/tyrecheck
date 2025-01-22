@@ -4,9 +4,8 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package edit
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
 // tyrePositionCmd represents the tyrePosition command
@@ -17,7 +16,8 @@ var tyrePositionCmd = &cobra.Command{
 	Calls the tyre position entry function which asks for the tyre position.`,
 
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("tyrePosition called")
+		TyreID := entries.ReadString("Enter the tyre ID: ")
+		entries.EditPosition(TyreID)
 	},
 }
 

@@ -18,7 +18,7 @@ func AddTyre() (models.Tyre, error) {
 		Position:  ReadInt("Tyre Position: "),
 		Location:  ReadString("Tyre Location: "),
 		State:     ReadString("Tyre State: "),
-		Condition: ReadString("Tyre Condition: "),
+		Condition: ReadInt("Tyre Condition: "),
 	}
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()
