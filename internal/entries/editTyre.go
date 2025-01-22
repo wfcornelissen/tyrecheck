@@ -27,10 +27,13 @@ func EditCondition(tyreID string) error {
 	// Stores the tyre in a struct variable
 
 	fmt.Println("Current Condition: ", tyre.Condition)
+	newCondition := ReadInt("Enter new condition: ")
 
-	tyre.Condition = ReadInt("Enter new condition: ")
+	if !ConfirmEntry(newCondition) {
+		EditCondition(tyreID)
+	}
 
-	_, err = db.Exec("UPDATE tyres SET condition = ? WHERE id = ?", tyre.Condition, tyreID)
+	_, err = db.Exec("UPDATE tyres SET condition = ? WHERE id = ?", newCondition, tyreID)
 	if err != nil {
 		fmt.Println("Error updating tyre:", err)
 		return err
@@ -118,20 +121,27 @@ func EditState(tyreID string) error {
 	}
 	defer db.Close()
 
-	//Retrieves the tyre from the database
 	var tyre models.Tyre
+	// Stores the tyre in a struct variable
 	err = db.QueryRow("SELECT id, condition, location, position, state FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Condition, &tyre.Location, &tyre.Position, &tyre.State)
 	if err != nil {
 		fmt.Println("Error retrieving tyre:", err)
 		return err
 	}
 
-	// Stores the tyre in a struct variable
-
+	// Print current and available states, then prompts the user to enter a new state
 	fmt.Println("Current State: ", tyre.State)
-
+	fmt.Println("Available states:")
+	for _, state := range models.TyreState {
+		fmt.Println(state)
+	}
 	tyre.State = ReadString("Enter new state: ")
+	if tyre.State != models.TyreState[1] && tyre.State != models.TyreState[2] && tyre.State != models.TyreState[3] && tyre.State != models.TyreState[4] {
+		fmt.Println("Invalid state")
+		return nil
+	}
 
+	// Updates the tyre in the database
 	_, err = db.Exec("UPDATE tyres SET state = ? WHERE id = ?", tyre.State, tyreID)
 	if err != nil {
 		fmt.Println("Error updating tyre:", err)

@@ -10,15 +10,16 @@ import (
 func AddTyre() (models.Tyre, error) {
 	fmt.Println("tyre called")
 	tyre := models.Tyre{
-		ID:        ReadString("Tyre ID: "),
-		Size:      ReadString("Tyre Size: "),
-		Brand:     ReadString("Tyre Brand: "),
-		Supplier:  ReadString("Tyre Supplier: "),
-		Price:     ReadFloat("Tyre Price: "),
-		Position:  ReadInt("Tyre Position: "),
-		Location:  ReadString("Tyre Location: "),
-		State:     ReadString("Tyre State: "),
-		Condition: ReadInt("Tyre Condition: "),
+		ID:            ReadString("Tyre ID: "),
+		Size:          ReadString("Tyre Size: "),
+		Brand:         ReadString("Tyre Brand: "),
+		Supplier:      ReadString("Tyre Supplier: "),
+		Price:         ReadFloat("Tyre Price: "),
+		Position:      ReadInt("Tyre Position: "),
+		Location:      ReadString("Tyre Location: "),
+		State:         ReadString("Tyre State: "),
+		Condition:     ReadInt("Tyre Condition: "),
+		StartingTread: ReadFloat("Tyre Starting Tread: "),
 	}
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()
@@ -41,15 +42,15 @@ func UploadTyreToDb(tyre models.Tyre) error {
 	}
 	defer db.Close()
 
-	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT, state TEXT, condition TEXT)")
+	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT, state TEXT, condition INTEGER, startingTread REAL)")
 
-	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")
+	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition, startingTread) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer record.Close()
 
-	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location, tyre.State, tyre.Condition)
+	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location, tyre.State, tyre.Condition, tyre.StartingTread)
 	if err != nil {
 		return err
 	}
