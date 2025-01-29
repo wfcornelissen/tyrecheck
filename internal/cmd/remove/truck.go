@@ -1,6 +1,3 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
 package remove
 
 import (
@@ -10,6 +7,7 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
+// Finished
 // truckCmd represents the truck command
 var truckCmd = &cobra.Command{
 	Use:   "truck",
