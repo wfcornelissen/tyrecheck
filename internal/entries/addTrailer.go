@@ -17,6 +17,7 @@ func AddTrailer() (models.Trailer, error) {
 		Make:     ReadString("Enter make: "),
 		Model:    ReadString("Enter model: "),
 		Year:     ReadInt("Enter year: "),
+		Scrap:    false,
 		Tyres:    []models.Tyre{},
 	}
 	if !ConfirmEntry(trailer) {
@@ -41,18 +42,19 @@ func UploadTrailerToDb(trailer models.Trailer) error {
 	}
 	defer db.Close()
 
-	db.Exec("CREATE TABLE IF NOT EXISTS trailers (fleet_num TEXT, vin TEXT, reg TEXT, make TEXT, model TEXT, year INTEGER)")
+	db.Exec("CREATE TABLE IF NOT EXISTS trailers (fleet_num TEXT, vin TEXT, reg TEXT, make TEXT, model TEXT, year INTEGER, scrap BOOLEAN)")
 
-	record, err := db.Prepare("INSERT INTO trailers (fleet_num, vin, reg, make, model, year) VALUES (?, ?, ?, ?, ?, ?)")
+	record, err := db.Prepare("INSERT INTO trailers (fleet_num, vin, reg, make, model, year, scrap) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer record.Close()
 
-	_, err = record.Exec(trailer.FleetNum, trailer.VIN, trailer.Reg, trailer.Make, trailer.Model, trailer.Year)
+	_, err = record.Exec(trailer.FleetNum, trailer.VIN, trailer.Reg, trailer.Make, trailer.Model, trailer.Year, trailer.Scrap)
 	if err != nil {
 		return err
 	}
 
+	fmt.Println("Trailer added successfully")
 	return nil
 }

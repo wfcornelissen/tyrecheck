@@ -10,6 +10,7 @@ type Truck struct {
 	Model    string
 	Year     int
 	Odo      int
+	Scrap    bool
 	Tyres    []Tyre
 }
 
@@ -20,6 +21,7 @@ type Trailer struct {
 	Make     string
 	Model    string
 	Year     int
+	Scrap    bool
 	Tyres    []Tyre
 }
 

@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/add"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/edit"
+	"github.com/wfcornelissen/tyrecheck/internal/cmd/remove"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -38,6 +39,7 @@ func Execute() {
 func addSubCmd(cmd *cobra.Command) {
 	cmd.AddCommand(add.AddCmd)
 	cmd.AddCommand(edit.EditCmd)
+	cmd.AddCommand(remove.RemoveCmd)
 }
 
 func init() {
