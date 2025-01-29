@@ -27,10 +27,18 @@ type Combination struct {
 	Trailer Trailer
 }
 
+type Fleet struct {
+	Fleet []Combination
+}
+
 func (t Truck) String() string {
 	return fmt.Sprintf("Fleet Number: %s\nVIN: %s\nRegistration: %s\nMake: %s\nModel: %s\nYear: %d", t.FleetNum, t.VIN, t.Reg, t.Make, t.Model, t.Year)
 }
 
 func (t Trailer) String() string {
 	return fmt.Sprintf("Fleet Number: %s\nVIN: %s\nRegistration: %s\nMake: %s\nModel: %s\nYear: %d", t.FleetNum, t.VIN, t.Reg, t.Make, t.Model, t.Year)
+}
+
+func (f Fleet) String() string {
+	return fmt.Sprintf("Fleet: %v", f.Fleet)
 }

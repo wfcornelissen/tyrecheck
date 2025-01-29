@@ -7,6 +7,7 @@ import (
 	"strings"
 )
 
+// Finished - Accepts any type, prints it and asks user to confirm the entry
 func ConfirmEntry(t any) bool {
 	fmt.Println(t)
 	reader := bufio.NewReader(os.Stdin)

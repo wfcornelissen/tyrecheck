@@ -19,3 +19,8 @@ var TyreState = map[int]string{
 	3: "Damaged",
 	4: "Scrap",
 }
+
+var TyreSize = map[int]string{
+	315: "315",
+	385: "385",
+}

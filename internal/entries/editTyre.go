@@ -7,6 +7,7 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
+// Finished
 func EditCondition(tyreID string) error {
 	//Receives a tyre and retrieves it from the database
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
@@ -25,25 +26,26 @@ func EditCondition(tyreID string) error {
 	}
 
 	// Stores the tyre in a struct variable
-
 	fmt.Println("Current Condition: ", tyre.Condition)
 	newCondition := ReadInt("Enter new condition: ")
-
 	if !ConfirmEntry(newCondition) {
 		EditCondition(tyreID)
 	}
 
+	// Updates the tyre in the database
 	_, err = db.Exec("UPDATE tyres SET condition = ? WHERE id = ?", newCondition, tyreID)
 	if err != nil {
 		fmt.Println("Error updating tyre:", err)
 		return err
 	}
 
+	// Confirms the update
 	fmt.Println("Tyre updated successfully")
 
 	return nil
 }
 
+// Finished
 func EditLocation(tyreID string) error {
 	//Receives a tyre and retrieves it from the database
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
@@ -53,7 +55,7 @@ func EditLocation(tyreID string) error {
 	}
 	defer db.Close()
 
-	//Retrieves the tyre from the database
+	//Retrieves the tyre from the database and stores it in a struct variable
 	var tyre models.Tyre
 	err = db.QueryRow("SELECT id, condition, location, position, state FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Condition, &tyre.Location, &tyre.Position, &tyre.State)
 	if err != nil {
@@ -61,23 +63,26 @@ func EditLocation(tyreID string) error {
 		return err
 	}
 
-	// Stores the tyre in a struct variable
-
+	// Prints the current location
 	fmt.Println("Current Location: ", tyre.Location)
 
+	// Prompts the user to enter a new location
 	tyre.Location = ReadString("Enter new location: ")
 
+	// Updates the tyre in the database
 	_, err = db.Exec("UPDATE tyres SET location = ? WHERE id = ?", tyre.Location, tyreID)
 	if err != nil {
 		fmt.Println("Error updating tyre:", err)
 		return err
 	}
 
+	// Confirms the update
 	fmt.Println("Tyre updated successfully")
 
 	return nil
 }
 
+// Finished
 func EditPosition(tyreID string) error {
 	//Receives a tyre and retrieves it from the database
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
@@ -87,7 +92,7 @@ func EditPosition(tyreID string) error {
 	}
 	defer db.Close()
 
-	//Retrieves the tyre from the database
+	//Retrieves the tyre from the database and stores it in a struct variable
 	var tyre models.Tyre
 	err = db.QueryRow("SELECT id, condition, location, position, state FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Condition, &tyre.Location, &tyre.Position, &tyre.State)
 	if err != nil {
@@ -95,23 +100,26 @@ func EditPosition(tyreID string) error {
 		return err
 	}
 
-	// Stores the tyre in a struct variable
-
+	// Prints the current position
 	fmt.Println("Current Position: ", tyre.Position)
 
+	// Prompts the user to enter a new position
 	tyre.Position = ReadInt("Enter new position: ")
 
+	// Updates the tyre in the database
 	_, err = db.Exec("UPDATE tyres SET position = ? WHERE id = ?", tyre.Position, tyreID)
 	if err != nil {
 		fmt.Println("Error updating tyre:", err)
 		return err
 	}
 
+	// Confirms the update
 	fmt.Println("Tyre updated successfully")
 
 	return nil
 }
 
+// Finished
 func EditState(tyreID string) error {
 	//Receives a tyre and retrieves it from the database
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
@@ -122,7 +130,7 @@ func EditState(tyreID string) error {
 	defer db.Close()
 
 	var tyre models.Tyre
-	// Stores the tyre in a struct variable
+	// Retrieves the tyre from the database and stores it in a struct variable
 	err = db.QueryRow("SELECT id, condition, location, position, state FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Condition, &tyre.Location, &tyre.Position, &tyre.State)
 	if err != nil {
 		fmt.Println("Error retrieving tyre:", err)
@@ -148,6 +156,7 @@ func EditState(tyreID string) error {
 		return err
 	}
 
+	// Confirms the update
 	fmt.Println("Tyre updated successfully")
 
 	return nil
