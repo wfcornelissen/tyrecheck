@@ -27,12 +27,11 @@ func RemoveTrailer(fleetNum string) error {
 
 	// Check if trailer is already removed
 	if trailer.Scrap {
-		fmt.Println("Trailer already removed")
-		return nil
+		return fmt.Errorf("trailer already removed")
 	}
 
 	// Confirm removal
-	if !ConfirmEntry(trailer) {
+	if ConfirmEntry(trailer) {
 		trailer.Scrap = true
 
 		_, err = db.Exec("UPDATE trailers SET scrap = true WHERE fleet_num = ?", fleetNum)
