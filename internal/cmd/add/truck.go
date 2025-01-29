@@ -20,7 +20,9 @@ var addTruckCmd = &cobra.Command{
 	Registration Number
 	Make
 	Model
-	Year`,
+	Year
+	Odometer
+	`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("truck called") //Debug
 		_, err := entries.AddTruck()

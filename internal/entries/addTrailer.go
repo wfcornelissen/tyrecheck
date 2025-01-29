@@ -8,6 +8,7 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
+// Finished
 func AddTrailer() (models.Trailer, error) {
 	trailer := models.Trailer{
 		FleetNum: ReadString("Enter fleet number: "),
