@@ -35,7 +35,7 @@ type Fleet struct {
 }
 
 func (t Truck) String() string {
-	return fmt.Sprintf("Fleet Number: %s\nVIN: %s\nRegistration: %s\nMake: %s\nModel: %s\nYear: %d\nOdometer: %d", t.FleetNum, t.VIN, t.Reg, t.Make, t.Model, t.Year, t.Odo)
+	return fmt.Sprintf("Fleet Number: %s\nVIN: %s\nRegistration: %s\nMake: %s\nModel: %s\nYear: %d\nOdometer: %d\nScrap: %t", t.FleetNum, t.VIN, t.Reg, t.Make, t.Model, t.Year, t.Odo, t.Scrap)
 }
 
 func (t Trailer) String() string {
