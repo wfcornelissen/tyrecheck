@@ -10,6 +10,7 @@ import (
 
 // Finished
 func AddTrailer() (models.Trailer, error) {
+	// Read input
 	trailer := models.Trailer{
 		FleetNum: ReadString("Enter fleet number: "),
 		VIN:      ReadString("Enter VIN: "),
@@ -20,6 +21,8 @@ func AddTrailer() (models.Trailer, error) {
 		Scrap:    false,
 		Tyres:    []models.Tyre{},
 	}
+
+	// Confirm entry
 	if !ConfirmEntry(trailer) {
 		trailer, err := AddTrailer()
 		if err != nil {
@@ -27,6 +30,8 @@ func AddTrailer() (models.Trailer, error) {
 		}
 		return trailer, nil
 	}
+
+	// Upload to SQLite db
 	if err := UploadTrailerToDb(trailer); err != nil {
 		return models.Trailer{}, err
 	}
@@ -35,6 +40,7 @@ func AddTrailer() (models.Trailer, error) {
 
 // Upload to SQLite db
 func UploadTrailerToDb(trailer models.Trailer) error {
+	// Open SQLite db
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
 		fmt.Println("Error opening database:", err)
@@ -42,14 +48,17 @@ func UploadTrailerToDb(trailer models.Trailer) error {
 	}
 	defer db.Close()
 
+	// Create table if it doesn't exist
 	db.Exec("CREATE TABLE IF NOT EXISTS trailers (fleet_num TEXT, vin TEXT, reg TEXT, make TEXT, model TEXT, year INTEGER, scrap BOOLEAN)")
 
+	// Insert trailer into db
 	record, err := db.Prepare("INSERT INTO trailers (fleet_num, vin, reg, make, model, year, scrap) VALUES (?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer record.Close()
 
+	// Execute insert
 	_, err = record.Exec(trailer.FleetNum, trailer.VIN, trailer.Reg, trailer.Make, trailer.Model, trailer.Year, trailer.Scrap)
 	if err != nil {
 		return err

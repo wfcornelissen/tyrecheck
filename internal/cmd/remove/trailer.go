@@ -1,6 +1,3 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
 package remove
 
 import (
@@ -10,18 +7,13 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
+// Finished
 // trailerCmd represents the trailer command
 var trailerCmd = &cobra.Command{
 	Use:   "trailer",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Remove a trailer from the database",
+	Long:  `Sets a trailer scrap status to true based on fleet number input given by user`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("trailer called")
 		fleetNum := entries.ReadString("Enter fleet number: ")
 		err := entries.RemoveTrailer(fleetNum)
 		if err != nil {
