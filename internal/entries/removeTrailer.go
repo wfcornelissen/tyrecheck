@@ -22,7 +22,24 @@ func RemoveTrailer(fleetNum string) error {
 		return err
 	}
 
-	fmt.Println(trailer)
+	if trailer.Scrap {
+		fmt.Println("Trailer already removed")
+		return nil
+	}
 
-	return nil
+	fmt.Println(trailer.Scrap)
+	if ConfirmEntry(trailer) {
+		trailer.Scrap = true
+
+		_, err = db.Exec("UPDATE trailers SET scrap = true WHERE fleet_num = ?", fleetNum)
+		if err != nil {
+			return err
+		}
+
+		fmt.Println("Trailer removed successfully")
+
+		return nil
+	}
+
+	return fmt.Errorf("trailer not removed")
 }
