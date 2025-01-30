@@ -24,7 +24,7 @@ to quickly create a Cobra application.`,
 		fmt.Println("combo called")
 		truckFleetNum := entries.ReadString("Truck Fleet Number: ")
 		trailerFleetNum := entries.ReadString("Trailer Fleet Number: ")
-		err := entries.LinkTruckTrailer(truckFleetNum, trailerFleetNum)
+		err := entries.ComboLink(truckFleetNum, trailerFleetNum)
 		if err != nil {
 			fmt.Println(err)
 		}

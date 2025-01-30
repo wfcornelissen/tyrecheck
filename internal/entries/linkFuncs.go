@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-func LinkTruckTrailer(truckFleetNum string, trailerFleetNum string) error {
+func ComboLink(truckFleetNum string, trailerFleetNum string) error {
 	//Open db
 	db, err := sql.Open("sqlite3", "./tyrecheck.db?_journal=WAL&_busy_timeout=5000")
 	if err != nil {
@@ -84,6 +84,25 @@ func SwopTruckTrailer(truckFleetNum1, truckFleetNum2, trailerFleetNum1, trailerF
 
 	// Add a small delay before updates to allow other transactions to complete
 	time.Sleep(100 * time.Millisecond)
+
+	// Check if the old combinations exist
+	rows, err := db.Query("SELECT * FROM combinations WHERE truck_fleet_num = ? AND trailer_fleet_num = ?", truckFleetNum1, trailerFleetNum1)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+	if !rows.Next() {
+		return fmt.Errorf("old combinations not found")
+	}
+
+	rows, err = db.Query("SELECT * FROM combinations WHERE truck_fleet_num = ? AND trailer_fleet_num = ?", truckFleetNum2, trailerFleetNum2)
+	if err != nil {
+		return err
+	}
+	defer rows.Close()
+	if !rows.Next() {
+		return fmt.Errorf("old combinations not found")
+	}
 
 	// Update combinations
 	_, err = db.Exec("UPDATE combinations SET trailer_fleet_num = ? WHERE truck_fleet_num = ?", trailerFleetNum2, truckFleetNum1)
