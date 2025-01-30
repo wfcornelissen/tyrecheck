@@ -10,6 +10,7 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/add"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/edit"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/remove"
+	"github.com/wfcornelissen/tyrecheck/internal/cmd/view"
 )
 
 // rootCmd represents the base command when called without any subcommands
@@ -40,6 +41,7 @@ func addSubCmd(cmd *cobra.Command) {
 	cmd.AddCommand(add.AddCmd)
 	cmd.AddCommand(edit.EditCmd)
 	cmd.AddCommand(remove.RemoveCmd)
+	cmd.AddCommand(view.ViewCmd)
 }
 
 func init() {
