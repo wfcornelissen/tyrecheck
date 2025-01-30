@@ -1,5 +1,7 @@
 package models
 
+import "fmt"
+
 type Tyre struct {
 	ID            string
 	Size          string
@@ -23,4 +25,8 @@ var TyreState = map[int]string{
 var TyreSize = map[int]string{
 	315: "315",
 	385: "385",
+}
+
+func (t Tyre) String() string {
+	return fmt.Sprintf("Tyre ID: %s\nSize: %s\nBrand: %s\nSupplier: %s\nPrice: %f\nPosition: %d\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
 }
