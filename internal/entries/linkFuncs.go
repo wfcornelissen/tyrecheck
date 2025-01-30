@@ -20,8 +20,8 @@ func LinkTruckTrailer(truckFleetNum string, trailerFleetNum string) error {
 		return err
 	}
 
-	//Create table if it doesn't exist
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS combinations (truck_fleet_num TEXT, trailer_fleet_num TEXT)")
+	//Create table if it doesn't exist. Both columns are foreign keys and should be unique
+	_, err = db.Exec("CREATE TABLE IF NOT EXISTS combinations (truck_fleet_num TEXT, trailer_fleet_num TEXT, PRIMARY KEY (truck_fleet_num, trailer_fleet_num))")
 	if err != nil {
 		return err
 	}
