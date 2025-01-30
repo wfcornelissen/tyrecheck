@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"fmt"
 	"time"
+
+	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
 func ComboLink(truckFleetNum string, trailerFleetNum string) error {
@@ -115,4 +117,22 @@ func SwopTruckTrailer(truckFleetNum1, truckFleetNum2, trailerFleetNum1, trailerF
 	}
 
 	return nil
+}
+
+func CheckTruckTrailerCombo(truckFleetNum string) (models.Combination, error) {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db?_journal=WAL&_busy_timeout=5000")
+	if err != nil {
+		return models.Combination{}, err
+	}
+	defer db.Close()
+
+	var combo models.Combination
+	err = db.QueryRow("SELECT * FROM combinations WHERE truck_fleet_num = ?", truckFleetNum).Scan(&combo.TruckFleetNum, &combo.TrailerFleetNum)
+	if err != nil {
+		return models.Combination{}, err
+	}
+
+	ConfirmEntry(combo)
+
+	return combo, nil
 }
