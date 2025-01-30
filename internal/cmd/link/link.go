@@ -12,13 +12,11 @@ import (
 // linkCmd represents the link command
 var LinkCmd = &cobra.Command{
 	Use:   "link",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Used to link entities together",
+	Long: `Used to link entities together.
+	-Truck and Trailer
+	-Truck and Tyre
+	-Trailer and Tyre`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("link called")
 	},
