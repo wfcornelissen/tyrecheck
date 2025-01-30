@@ -6,8 +6,8 @@ import (
 )
 
 // tyrePositionCmd represents the tyrePosition command
-var tyrePositionCmd = &cobra.Command{
-	Use:   "tyrePosition",
+var PositionCmd = &cobra.Command{
+	Use:   "position",
 	Short: "Calls the tyre position entry function",
 	Long: `Used as a subcommand for edit.
 	Calls the tyre position entry function which asks for the tyre position.`,
@@ -18,7 +18,7 @@ var tyrePositionCmd = &cobra.Command{
 }
 
 func init() {
-	EditCmd.AddCommand(tyrePositionCmd)
+	EditCmd.AddCommand(PositionCmd)
 
 	// Here you will define your flags and configuration settings.
 

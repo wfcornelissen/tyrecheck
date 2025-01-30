@@ -25,7 +25,6 @@ to quickly create a Cobra application.`,
 }
 
 func init() {
-	LinkCmd.AddCommand(LinkCmd)
 
 	// Here you will define your flags and configuration settings.
 

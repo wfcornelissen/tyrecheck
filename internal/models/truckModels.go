@@ -26,8 +26,8 @@ type Trailer struct {
 }
 
 type Combination struct {
-	Truck   Truck
-	Trailer Trailer
+	TruckFleetNum   string
+	TrailerFleetNum string
 }
 
 type Fleet struct {

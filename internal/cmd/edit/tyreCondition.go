@@ -6,8 +6,8 @@ import (
 )
 
 // tyreConditionCmd represents the tyreCondition command
-var tyreConditionCmd = &cobra.Command{
-	Use:   "tyreCondition",
+var ConditionCmd = &cobra.Command{
+	Use:   "condition",
 	Short: "Calls the tyre condition entry function",
 	Long: `Used as a subcommand for edit.
 	Calls the tyre condition entry function which asks for the tyre condition.`,
@@ -18,7 +18,7 @@ var tyreConditionCmd = &cobra.Command{
 }
 
 func init() {
-	EditCmd.AddCommand(tyreConditionCmd)
+	EditCmd.AddCommand(ConditionCmd)
 
 	// Here you will define your flags and configuration settings.
 

@@ -6,8 +6,8 @@ import (
 )
 
 // tyreStateCmd represents the tyreState command
-var tyreStateCmd = &cobra.Command{
-	Use:   "tyreState",
+var StateCmd = &cobra.Command{
+	Use:   "state",
 	Short: "Calls the tyre state entry function",
 	Long: `Used as a subcommand for edit.
 	Calls the tyre state entry function which asks for the tyre state.`,
@@ -18,7 +18,7 @@ var tyreStateCmd = &cobra.Command{
 }
 
 func init() {
-	EditCmd.AddCommand(tyreStateCmd)
+	EditCmd.AddCommand(StateCmd)
 
 	// Here you will define your flags and configuration settings.
 

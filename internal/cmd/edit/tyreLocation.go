@@ -6,8 +6,8 @@ import (
 )
 
 // tyreLocationCmd represents the tyreLocation command
-var tyreLocationCmd = &cobra.Command{
-	Use:   "tyreLocation",
+var LocationCmd = &cobra.Command{
+	Use:   "location",
 	Short: "Calls the tyre location entry function",
 	Long: `Used as a subcommand for edit.
 	Calls the tyre location entry function which asks for the tyre location.`,
@@ -18,7 +18,7 @@ var tyreLocationCmd = &cobra.Command{
 }
 
 func init() {
-	EditCmd.AddCommand(tyreLocationCmd)
+	EditCmd.AddCommand(LocationCmd)
 
 	// Here you will define your flags and configuration settings.
 
