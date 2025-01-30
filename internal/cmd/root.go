@@ -9,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/add"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/edit"
+	"github.com/wfcornelissen/tyrecheck/internal/cmd/link"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/remove"
 	"github.com/wfcornelissen/tyrecheck/internal/cmd/view"
 )
@@ -42,6 +43,7 @@ func addSubCmd(cmd *cobra.Command) {
 	cmd.AddCommand(edit.EditCmd)
 	cmd.AddCommand(remove.RemoveCmd)
 	cmd.AddCommand(view.ViewCmd)
+	cmd.AddCommand(link.LinkCmd)
 }
 
 func init() {
