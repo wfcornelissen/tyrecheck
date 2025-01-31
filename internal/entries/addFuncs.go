@@ -78,7 +78,7 @@ func AddTruck() (models.Truck, error) {
 		Year:     ReadInt("Enter year: "),
 		Odo:      ReadInt("Enter odometer: "),
 		Scrap:    false,
-		Tyres:    []models.Tyre{},
+		Tyres:    make([]models.Tyre, 10),
 	}
 	if !ConfirmEntry(truck) {
 		truck, err := AddTruck()
