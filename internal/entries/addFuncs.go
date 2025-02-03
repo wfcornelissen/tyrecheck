@@ -70,18 +70,6 @@ func UploadTrailerToDb(trailer models.Trailer) error {
 
 func AddTruck() (models.Truck, error) {
 	// Create a default tyre with 0 as all values
-	tyre := models.Tyre{
-		ID:            "0",
-		Size:          "0",
-		Brand:         "0",
-		Supplier:      "0",
-		Price:         0,
-		Position:      0,
-		Location:      "0",
-		State:         "0",
-		Condition:     0,
-		StartingTread: 0,
-	}
 	truck := models.Truck{
 		FleetNum: ReadString("Enter fleet number: "),
 		VIN:      ReadString("Enter VIN: "),
@@ -92,11 +80,6 @@ func AddTruck() (models.Truck, error) {
 		Odo:      ReadInt("Enter odometer: "),
 		Scrap:    false,
 		Tyres:    make([]models.Tyre, 10),
-	}
-
-	for i := 1; i <= 10; i++ {
-		tyre.Position = i
-		truck.Tyres[i-1] = tyre
 	}
 
 	if !ConfirmEntry(truck) {
