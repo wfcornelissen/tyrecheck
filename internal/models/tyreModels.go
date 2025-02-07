@@ -1,6 +1,8 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Tyre struct {
 	ID            string
@@ -29,4 +31,47 @@ var TyreSize = map[int]string{
 
 func (t Tyre) String() string {
 	return fmt.Sprintf("Tyre ID: %s\nSize: %s\nBrand: %s\nSupplier: %s\nPrice: %f\nPosition: %d\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
+}
+func (t Tyre) SetPosition(position int) {
+	t.Position = position
+	fmt.Println("Tyre position successfully set to ", t.Position)
+}
+
+type TyrePosition struct {
+	ID              string // Unique identifier for this position assignment
+	TyreID          string // Reference to the Tyre
+	VehicleFleetNum string // FleetNum of either Truck or Trailer
+	VehicleType     string // "TRUCK" or "TRAILER" to distinguish
+	Position        int    // The position number on the vehicle
+	DateAssigned    string // When the tyre was assigned to this position
+	Active          bool   // Whether this is the current active position
+}
+
+func IsValidTruckPosition(position int) bool {
+	return position >= 1 && position <= 10
+}
+
+func IsValidTrailerPosition(position int) bool {
+	return position >= 11 && position <= 26
+}
+
+func GetAxleFromPosition(position int) int {
+	switch position {
+	case 1, 2:
+		return 1
+	case 3, 4, 5, 6:
+		return 2
+	case 7, 8, 9, 10:
+		return 3
+	case 11, 12, 13, 14:
+		return 4
+	case 15, 16, 17, 18:
+		return 5
+	case 19, 20, 21, 22:
+		return 6
+	case 23, 24, 25, 26:
+		return 7
+	default:
+		return 0
+	}
 }

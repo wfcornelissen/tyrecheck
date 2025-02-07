@@ -104,7 +104,7 @@ func EditPosition(tyreID string) error {
 	fmt.Println("Current Position: ", tyre.Position)
 
 	// Prompts the user to enter a new position
-	tyre.Position = ReadInt("Enter new position: ")
+	tyre.SetPosition(ReadInt("Enter new position: "))
 
 	// Updates the tyre in the database
 	_, err = db.Exec("UPDATE tyres SET position = ? WHERE id = ?", tyre.Position, tyreID)

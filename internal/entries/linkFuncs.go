@@ -150,6 +150,7 @@ func CheckTruckTrailerCombo(truckFleetNum string) (models.Combination, error) {
 }
 
 func AssignTyre(fleetNum string, tyreID string) error {
+
 	err := checks.CheckExist(fleetNum)
 	if err != nil {
 		return err
