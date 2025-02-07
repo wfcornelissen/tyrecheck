@@ -37,16 +37,6 @@ func (t Tyre) SetPosition(position int) {
 	fmt.Println("Tyre position successfully set to ", t.Position)
 }
 
-type TyrePosition struct {
-	ID              string // Unique identifier for this position assignment
-	TyreID          string // Reference to the Tyre
-	VehicleFleetNum string // FleetNum of either Truck or Trailer
-	VehicleType     string // "TRUCK" or "TRAILER" to distinguish
-	Position        int    // The position number on the vehicle
-	DateAssigned    string // When the tyre was assigned to this position
-	Active          bool   // Whether this is the current active position
-}
-
 func IsValidTruckPosition(position int) bool {
 	return position >= 1 && position <= 10
 }
