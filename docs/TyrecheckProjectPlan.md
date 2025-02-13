@@ -45,8 +45,25 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
 
 ### Phase 1
 - Base commands: **Add, Remove, Edit, View**.
+- Base commands completed:
+  - Add: ✓
+  - Remove: ✓ 
+  - Edit: ✓
+  - View: ✓
+
 - Base functions to reflect the commands.
+- Base functions completed:
+  - Add: ✓
+  - Remove: ✓ 
+  - Edit: ✓
+  - View: ✓
+
 - SQL database interactions for each.
+- SQL database interactions completed:
+  - Add: ✓
+  - Remove: ✓ 
+  - Edit: ✓
+  - View: ✓
 
 ### Phase 2
 - Higher-level commands: **Link and Work Done** commands.
@@ -54,6 +71,21 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
 - SQL database interactions for each.
 
 ### Phase 3
+- **Fault logging**
+  - Tyre
+    - Delamination
+    - Cut
+    - Abrasion
+    - Uneven wear
+      - Diagonal Pattern
+        - Likely caused by worn suspension.
+      - Side to side Pattern
+        - Likely caused by worn or loose bearings.
+    - Other
+    - Blow-out
+  - Valve
+    - Leak
+    - Failure
 - **Report commands** with functions.
 - **Migration to an online database**.
 
