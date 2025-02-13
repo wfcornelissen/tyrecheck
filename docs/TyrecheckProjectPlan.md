@@ -67,6 +67,20 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
 
 ### Phase 2
 - Higher-level commands: **Link and Work Done** commands.
+  - Link:
+    - Truck and Trailer ✓
+    - Truck and Tyre 
+    - Trailer and Tyre 
+  - Work Done (tracking work done wrt tyres):
+    - Fit
+    - Remove
+    - Repair
+    - Check
+    - Retread
+      - Sent
+      - Received
+    - Swop
+    - Rotate (on rim)
 - Functions to reflect the commands.
 - SQL database interactions for each.
 
@@ -81,11 +95,16 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
         - Likely caused by worn suspension.
       - Side to side Pattern
         - Likely caused by worn or loose bearings.
-    - Other
     - Blow-out
+    - Other
   - Valve
     - Leak
     - Failure
+  - Rim
+    - Bent
+    - Worn
+    - Other
+  
 - **Report commands** with functions.
 - **Migration to an online database**.
 

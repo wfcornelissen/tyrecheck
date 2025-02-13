@@ -15,6 +15,7 @@ type Tyre struct {
 	State         string
 	Condition     int
 	StartingTread float64
+	Archived      bool
 }
 
 var TyreState = map[int]string{

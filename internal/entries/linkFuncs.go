@@ -168,5 +168,11 @@ func AssignTyre(fleetNum string, tyreID string) error {
 
 	// TODO: Implement function based on data structure decision
 
+	var tyre models.Tyre
+	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }

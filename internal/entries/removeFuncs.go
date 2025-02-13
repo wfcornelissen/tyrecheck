@@ -96,7 +96,7 @@ func RemoveTyre(tyreID string) error {
 
 	// Extract tyre into struct variable from db
 	var tyre models.Tyre
-	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread)
+	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
 	if err != nil {
 		return err
 	}
@@ -109,7 +109,8 @@ func RemoveTyre(tyreID string) error {
 	// Confirm removal
 	if ConfirmEntry(tyre) {
 		tyre.State = "Scrap"
-		_, err = db.Exec("UPDATE tyres SET state = 'Scrap' WHERE id = ?", tyreID)
+		tyre.Archived = true
+		_, err = db.Exec("UPDATE tyres SET state = 'Scrap', archived = true WHERE id = ?", tyreID)
 		if err != nil {
 			return err
 		}

@@ -133,6 +133,7 @@ func AddTyre() (models.Tyre, error) {
 		State:         ReadString("Tyre State: "),
 		Condition:     ReadInt("Tyre Condition: "),
 		StartingTread: ReadFloat("Tyre Starting Tread: "),
+		Archived:      false,
 	}
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()
@@ -155,15 +156,15 @@ func UploadTyreToDb(tyre models.Tyre) error {
 	}
 	defer db.Close()
 
-	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT, state TEXT, condition INTEGER, startingTread REAL)")
+	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT, state TEXT, condition INTEGER, startingTread REAL, archived BOOLEAN)")
 
-	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition, startingTread) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
+	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition, startingTread, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {
 		return err
 	}
 	defer record.Close()
 
-	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location, tyre.State, tyre.Condition, tyre.StartingTread)
+	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location, tyre.State, tyre.Condition, tyre.StartingTread, tyre.Archived)
 	if err != nil {
 		return err
 	}
