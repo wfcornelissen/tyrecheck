@@ -10,7 +10,7 @@ type Tyre struct {
 	Brand         string
 	Supplier      string
 	Price         float64
-	Position      int
+	Position      string
 	Location      string
 	State         string
 	Condition     int

@@ -3,6 +3,7 @@ package entries
 import (
 	"database/sql"
 	"fmt"
+	"strconv"
 	"time"
 
 	"github.com/wfcornelissen/tyrecheck/internal/checks"
@@ -168,8 +169,26 @@ func AssignTyre(fleetNum string, tyreID string) error {
 
 	// TODO: Implement function based on data structure decision
 
+	// Set tyre archive to true
+	_, err = db.Exec("UPDATE tyres SET archived = true WHERE id = ?", tyreID)
+	if err != nil {
+		return err
+	}
+
+	// Extract tyre into struct variable from db
 	var tyre models.Tyre
 	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+	if err != nil {
+		return err
+	}
+
+	tyre.Archived = false
+	tyre.Location = "NULL"
+	position := ReadInt("Enter the new position of the tyre: ")
+	tyre.Position = fleetNum + strconv.Itoa(position)
+
+	// Update tyre in db
+	_, err = db.Exec("UPDATE tyres SET archived = ?, location = ?, position = ? WHERE id = ?", tyre.Archived, tyre.Location, tyre.Position, tyreID)
 	if err != nil {
 		return err
 	}

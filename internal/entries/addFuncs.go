@@ -128,7 +128,7 @@ func AddTyre() (models.Tyre, error) {
 		Brand:         ReadString("Tyre Brand: "),
 		Supplier:      ReadString("Tyre Supplier: "),
 		Price:         ReadFloat("Tyre Price: "),
-		Position:      ReadInt("Tyre Position: "),
+		Position:      ReadString("Tyre Position: "),
 		Location:      ReadString("Tyre Location: "),
 		State:         ReadString("Tyre State: "),
 		Condition:     ReadInt("Tyre Condition: "),
@@ -156,7 +156,7 @@ func UploadTyreToDb(tyre models.Tyre) error {
 	}
 	defer db.Close()
 
-	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position INTEGER, location TEXT, state TEXT, condition INTEGER, startingTread REAL, archived BOOLEAN)")
+	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position TEXT, location TEXT, state TEXT, condition INTEGER, startingTread REAL, archived BOOLEAN)")
 
 	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition, startingTread, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
 	if err != nil {

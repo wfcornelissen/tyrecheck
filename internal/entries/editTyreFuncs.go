@@ -82,7 +82,7 @@ func EditLocation(tyreID string) error {
 	return nil
 }
 
-// Finished
+// Update to accommodate string position
 func EditPosition(tyreID string) error {
 	//Receives a tyre and retrieves it from the database
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
