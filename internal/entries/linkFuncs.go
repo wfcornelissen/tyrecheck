@@ -169,8 +169,8 @@ func AssignTyre(fleetNum string, tyreID string) error {
 
 	// TODO: Implement function based on data structure decision
 
-	// Set tyre archive to true
-	_, err = db.Exec("UPDATE tyres SET archived = true WHERE id = ?", tyreID)
+	// Set tyre archive to false
+	_, err = db.Exec("UPDATE tyres SET archived = false WHERE id = ?", tyreID)
 	if err != nil {
 		return err
 	}

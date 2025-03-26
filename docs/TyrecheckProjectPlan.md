@@ -69,8 +69,8 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
 - Higher-level commands: **Link and Work Done** commands.
   - Link:
     - Truck and Trailer ✓
-    - Truck and Tyre 
-    - Trailer and Tyre 
+    - Truck and Tyre ✓
+    - Trailer and Tyre ✓
   - Work Done (tracking work done wrt tyres):
     - Fit
     - Remove
