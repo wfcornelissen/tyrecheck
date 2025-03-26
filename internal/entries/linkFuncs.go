@@ -7,7 +7,6 @@ import (
 	"time"
 
 	"github.com/wfcornelissen/tyrecheck/internal/checks"
-	"github.com/wfcornelissen/tyrecheck/internal/entries"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
@@ -168,28 +167,25 @@ func AssignTyre(fleetNum string, tyreID string) error {
 	}
 	defer db.Close()
 
-	// TODO: Implement function based on data structure decision
-
-	// Set tyre archive to false
-	_, err = db.Exec("UPDATE tyres SET archived = true WHERE position = ?", fleetNum+tyreID)
-	if err != nil {
-		fmt.Println("Error setting tyre archive to false:", err)
-	}
-
 	var oldTyre models.Tyre
 	err = db.QueryRow("SELECT * FROM tyres WHERE position = ?", fleetNum+tyreID).Scan(&oldTyre.ID, &oldTyre.Size, &oldTyre.Brand, &oldTyre.Supplier, &oldTyre.Price, &oldTyre.Position, &oldTyre.Location, &oldTyre.State, &oldTyre.Condition, &oldTyre.StartingTread, &oldTyre.Archived)
 	if err != nil {
-		fmt.Println("Error getting old tyre:", err)
-	}
-	oldTyre.Location, err = entries.ReadString("Enter the location of the old tyre: ")
-	if err != nil {
-		fmt.Println("Error getting old tyre location:", err)
+		if err == sql.ErrNoRows {
+			// No old tyre exists at this position, which is fine
+			fmt.Println("No existing tyre at this position, proceeding with new assignment")
+		} else {
+			fmt.Println("Error getting old tyre for updates:", err)
+		}
+	} else {
+		// Only ask for location and update if there was an old tyre
+		oldTyre.Location = ReadString("Enter the location for the old tyre: ")
+		_, err = db.Exec("UPDATE tyres SET location =? WHERE id = ?", oldTyre.Location, oldTyre.ID)
+		if err != nil {
+			fmt.Println("Error updating old tyre location:", err)
+		}
 	}
 
-	_, err = db.Exec("UPDATE tyres SET location =? WHERE tyreID = ?", oldTyre.Location, oldTyre.ID)
-	if err != nil {
-		fmt.Println("Error updating old tyre location:", err)
-	}
+	time.Sleep(100 * time.Millisecond)
 
 	// Extract tyre into struct variable from db
 	var tyre models.Tyre
