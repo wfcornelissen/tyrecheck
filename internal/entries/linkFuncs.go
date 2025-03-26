@@ -7,6 +7,7 @@ import (
 	"time"
 
 	"github.com/wfcornelissen/tyrecheck/internal/checks"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
@@ -170,9 +171,24 @@ func AssignTyre(fleetNum string, tyreID string) error {
 	// TODO: Implement function based on data structure decision
 
 	// Set tyre archive to false
-	_, err = db.Exec("UPDATE tyres SET archived = false WHERE id = ?", tyreID)
+	_, err = db.Exec("UPDATE tyres SET archived = true WHERE position = ?", fleetNum+tyreID)
 	if err != nil {
-		return err
+		fmt.Println("Error setting tyre archive to false:", err)
+	}
+
+	var oldTyre models.Tyre
+	err = db.QueryRow("SELECT * FROM tyres WHERE position = ?", fleetNum+tyreID).Scan(&oldTyre.ID, &oldTyre.Size, &oldTyre.Brand, &oldTyre.Supplier, &oldTyre.Price, &oldTyre.Position, &oldTyre.Location, &oldTyre.State, &oldTyre.Condition, &oldTyre.StartingTread, &oldTyre.Archived)
+	if err != nil {
+		fmt.Println("Error getting old tyre:", err)
+	}
+	oldTyre.Location, err = entries.ReadString("Enter the location of the old tyre: ")
+	if err != nil {
+		fmt.Println("Error getting old tyre location:", err)
+	}
+
+	_, err = db.Exec("UPDATE tyres SET location =? WHERE tyreID = ?", oldTyre.Location, oldTyre.ID)
+	if err != nil {
+		fmt.Println("Error updating old tyre location:", err)
 	}
 
 	// Extract tyre into struct variable from db
