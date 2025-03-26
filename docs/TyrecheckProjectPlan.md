@@ -57,6 +57,7 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
   - Remove: ✓ 
   - Edit: ✓
   - View: ✓
+    - Need to format the repr better for all structs.
 
 - SQL database interactions for each.
 - SQL database interactions completed:
@@ -69,13 +70,18 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
 - Higher-level commands: **Link and Work Done** commands.
   - Link:
     - Truck and Trailer ✓
+      - Funcs finished  ✓
     - Truck and Tyre ✓
+      - Funcs finished  ✓
     - Trailer and Tyre ✓
+      - Funcs finished  ✓
   - Work Done (tracking work done wrt tyres):
-    - Fit
+    - Fit ✓
+      - Funcs needs ironing
     - Remove
     - Repair
-    - Check
+    - Check ✓
+      - Funcs finished  ✓
     - Retread
       - Sent
       - Received
