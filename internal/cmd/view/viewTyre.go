@@ -15,7 +15,7 @@ var tyreCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("tyre called")
 		tyreID := entries.ReadString("Enter tyre ID: ")
-		err := entries.ViewTyre(tyreID)
+		_, err := entries.ViewTyre(tyreID)
 		if err != nil {
 			fmt.Println("Error viewing tyre:", err)
 		}

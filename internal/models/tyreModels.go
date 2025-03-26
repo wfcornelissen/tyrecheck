@@ -31,7 +31,7 @@ var TyreSize = map[int]string{
 }
 
 func (t Tyre) String() string {
-	return fmt.Sprintf("Tyre ID: %s\nSize: %s\nBrand: %s\nSupplier: %s\nPrice: %s\nPosition: %s\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
+	return fmt.Sprintf("Tyre ID: %s\nSize: %s\nBrand: %s\nSupplier: %s\nPrice: %2f\nPosition: %s\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
 }
 func (t Tyre) SetPosition(position string) {
 	t.Position = position

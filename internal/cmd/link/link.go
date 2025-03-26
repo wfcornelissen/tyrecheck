@@ -4,8 +4,6 @@ Copyright © 2025 NAME HERE <EMAIL ADDRESS>
 package link
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
@@ -18,7 +16,7 @@ var LinkCmd = &cobra.Command{
 	-Truck and Tyre
 	-Trailer and Tyre`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("link called")
+		cmd.Help()
 	},
 }
 
