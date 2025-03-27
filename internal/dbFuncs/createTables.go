@@ -16,7 +16,7 @@ func CreateTyresTable() error {
 	defer db.Close()
 
 	tyresTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyres (
-		id TEXT PRIMARY KEY UNIQUE,
+		id TEXT PRIMARY KEY,
 		size INTEGER,
 		brand TEXT,
 		model TEXT,

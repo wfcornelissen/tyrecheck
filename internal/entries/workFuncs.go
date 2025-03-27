@@ -48,6 +48,13 @@ func SendRetread() error {
 	}
 
 	tyre.Model = tyre.Model + "Retread"
+	tyre.Position = "Retread"
+	tyre.State = "Used"
+	tyre.Location = "SentRetread"
+
+	dbFuncs.CreateTyreEntry(&tyre)
+	time.Sleep(1 * time.Second)
+	dbFuncs.CreateRetreadSentEntry(&tyre)
 
 	return nil
 }
