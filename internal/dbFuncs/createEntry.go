@@ -120,6 +120,25 @@ func CreateCombinationEntry(combination *models.Combination) error {
 }
 
 func CreateTyreCheckEntry(tyreCheck *models.TyreCheck) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO tyrechecks (id, tyreID, checkDate, position, odo) VALUES (?, ?, ?, ?, ?)",
+		tyreCheck.ID,
+		tyreCheck.TyreID,
+		tyreCheck.CheckDate,
+		tyreCheck.Position,
+		tyreCheck.Odo)
+
+	if err != nil {
+		fmt.Println("Error creating tyre check entry")
+		return err
+	}
+
+	fmt.Println("Tyre check entry created")
 
 	return nil
 }
