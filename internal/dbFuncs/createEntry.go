@@ -165,3 +165,11 @@ func CreateTyreRepairEntry(tyreRepair *models.TyreWork) error {
 	fmt.Println("Tyre repair entry created")
 	return nil
 }
+
+func CreateRetreadSentEntry(retreadSent *models.Tyre) error {
+	return nil
+}
+
+func CreateRetreadReceivedEntry(retreadReceived *models.Tyre) error {
+	return nil
+}
