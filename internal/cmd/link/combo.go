@@ -22,9 +22,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("combo called")
-		truckFleetNum := entries.ReadString("Truck Fleet Number: ")
-		trailerFleetNum := entries.ReadString("Trailer Fleet Number: ")
-		err := entries.ComboLink(truckFleetNum, trailerFleetNum)
+		// Call from linkFuncs
+		err := entries.CreateCombo()
 		if err != nil {
 			fmt.Println(err)
 		}

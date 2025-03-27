@@ -7,9 +7,12 @@ import (
 	"time"
 
 	"github.com/wfcornelissen/tyrecheck/internal/checks"
+	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
+/*
 func ComboLink(truckFleetNum string, trailerFleetNum string) error {
 	err := checks.CheckExist(truckFleetNum)
 	if err != nil {
@@ -60,6 +63,7 @@ func ComboLink(truckFleetNum string, trailerFleetNum string) error {
 
 	return nil
 }
+*/
 
 func SwopTruckTrailer(truckFleetNum1, truckFleetNum2, trailerFleetNum1, trailerFleetNum2 string) error {
 	err := checks.CheckExist(truckFleetNum1)
@@ -202,6 +206,21 @@ func AssignTyre(fleetNum string, tyreID string) error {
 
 	// Update tyre in db
 	_, err = db.Exec("UPDATE tyres SET archived = ?, location = ?, position = ? WHERE id = ?", tyre.Archived, tyre.Location, tyre.Position, tyreID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func CreateCombo() error {
+	combo := models.Combination{
+		TruckFleetNum:   entries.ReadString("Truck Fleet Number: "),
+		TrailerFleetNum: entries.ReadString("Trailer Fleet Number: "),
+	}
+
+	// Call from dbFuncs
+	err := dbFuncs.CreateCombinationEntry(&combo)
 	if err != nil {
 		return err
 	}

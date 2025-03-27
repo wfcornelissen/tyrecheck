@@ -100,6 +100,22 @@ func CreateTrailerEntry(trailer *models.Trailer) error {
 }
 
 func CreateCombinationEntry(combination *models.Combination) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO combinations (truckFleetNum, trailerFleetNum) VALUES (?, ?)",
+		combination.TruckFleetNum,
+		combination.TrailerFleetNum)
+	if err != nil {
+		fmt.Println("Error creating combination entry")
+		return err
+	}
+
+	fmt.Println("Combination entry created")
+
 	return nil
 }
 
