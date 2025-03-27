@@ -11,7 +11,6 @@ type Truck struct {
 	Year     int    `db:"year" sqlite:"INTEGER"`
 	Odo      int    `db:"odo" sqlite:"INTEGER"`
 	Scrap    bool   `db:"scrap" sqlite:"BOOLEAN"`
-	Tyres    []Tyre // Tyres are not stored in the trucks table, but are stored in the tyres table. Need functionality to link the two. Maybe foreign key?
 	Archived bool   `db:"archived" sqlite:"BOOLEAN"`
 }
 
@@ -23,7 +22,6 @@ type Trailer struct {
 	Model    string `db:"model" sqlite:"TEXT"`
 	Year     int    `db:"year" sqlite:"INTEGER"`
 	Scrap    bool   `db:"scrap" sqlite:"BOOLEAN"`
-	Tyres    []Tyre // Tyres are not stored in the trucks table, but are stored in the tyres table. Need functionality to link the two. Maybe foreign key?
 	Archived bool   `db:"archived" sqlite:"BOOLEAN"`
 }
 
