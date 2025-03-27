@@ -40,6 +40,21 @@ func RepairTyre() error {
 	return nil
 }
 
+func Retread() error {
+	sendOrReceive := ReadInt("Please select from the below list:")
+	for i := 0; i <= len(models.RetreadState); i++ {
+		fmt.Println(i, models.RetreadState[i])
+	}
+	switch sendOrReceive {
+	case 1:
+		SendRetread()
+	case 2:
+		ReceiveRetread()
+	case 3:
+		ScrapRetread()
+	}
+}
+
 func SendRetread() error {
 	tyreID := ReadString("Please enter tyre ID: ")
 	tyre, err := dbFuncs.ReadTyre(tyreID)
@@ -58,3 +73,10 @@ func SendRetread() error {
 
 	return nil
 }
+
+func ReceiveRetread() error {
+	return nil
+}
+
+func ScrapRetread() error {
+	return nil

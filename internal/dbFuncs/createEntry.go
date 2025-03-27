@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
@@ -168,6 +169,21 @@ func CreateTyreRepairEntry(tyreRepair *models.TyreWork) error {
 
 func CreateRetreadSentEntry(retreadSent *models.Tyre) error {
 	// Will need logic in workFuncs and readEntry.go
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	workDate := entries.ReadString("Please enter work date: (dd/mm/yyyy)")
+	odo := entries.ReadInt("Please enter odo: ")
+
+	_, err = db.Exec("INSERT INTO retreadSent (id, tyreID, workDate, position, odo) VALUES (?, ?, ?, ?, ?)",
+		retreadSent.ID,
+		workDate,
+		retreadSent.Position,
+		odo)
+
 	return nil
 }
 

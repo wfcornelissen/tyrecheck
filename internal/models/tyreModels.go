@@ -32,6 +32,12 @@ var TyreSize = map[int]string{
 	385: "385",
 }
 
+var RetreadState = map[int]string{
+	1: "Retread Sent",
+	2: "Retread Received",
+	3: "Retread Scrapped",
+}
+
 type TyreWork struct {
 	ID       string    `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
 	TyreID   string    `db:"tyreID" sqlite:"TEXT"`
