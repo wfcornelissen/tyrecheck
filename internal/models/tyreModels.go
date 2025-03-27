@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"time"
 )
 
 type Tyre struct {
@@ -29,6 +30,14 @@ var TyreState = map[int]string{
 var TyreSize = map[int]string{
 	315: "315",
 	385: "385",
+}
+
+type TyreCheck struct {
+	ID        string    `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
+	TyreID    string    `db:"tyreID" sqlite:"TEXT"`
+	CheckDate time.Time `db:"checkDate" sqlite:"TEXT"`
+	Position  string    `db:"position" sqlite:"TEXT"`
+	Odo       int       `db:"odo" sqlite:"INTEGER"`
 }
 
 func (t Tyre) String() string {
