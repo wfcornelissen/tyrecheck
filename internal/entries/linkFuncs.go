@@ -8,7 +8,6 @@ import (
 
 	"github.com/wfcornelissen/tyrecheck/internal/checks"
 	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
-	"github.com/wfcornelissen/tyrecheck/internal/entries"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
@@ -215,8 +214,8 @@ func AssignTyre(fleetNum string, tyreID string) error {
 
 func CreateCombo() error {
 	combo := models.Combination{
-		TruckFleetNum:   entries.ReadString("Truck Fleet Number: "),
-		TrailerFleetNum: entries.ReadString("Trailer Fleet Number: "),
+		TruckFleetNum:   ReadString("Truck Fleet Number: "),
+		TrailerFleetNum: ReadString("Trailer Fleet Number: "),
 	}
 
 	// Call from dbFuncs
