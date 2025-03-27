@@ -25,5 +25,17 @@ func CheckTyre() error {
 }
 
 func RepairTyre() error {
+	tyreRepair := models.TyreWork{
+		TyreID:   ReadString("Please enter tyre ID: "),
+		WorkDate: time.Now(),
+		Position: ReadString("Please enter tyre position: "),
+		Odo:      ReadInt("Please enter tyre odo: "),
+	}
+	if ConfirmEntry(tyreRepair) {
+		dbFuncs.CreateTyreRepairEntry(&tyreRepair)
+	} else {
+		fmt.Println("Tyre repair not logged")
+	}
+
 	return nil
 }

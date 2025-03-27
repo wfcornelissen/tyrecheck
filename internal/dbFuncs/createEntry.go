@@ -143,6 +143,25 @@ func CreateTyreCheckEntry(tyreCheck *models.TyreWork) error {
 	return nil
 }
 
-func CreateTyreRepairEntry(tyreRepair *models.Tyre) error {
+func CreateTyreRepairEntry(tyreRepair *models.TyreWork) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO tyrerepairs (id, tyreID, workDate, position, odo) VALUES (?, ?, ?, ?, ?)",
+		tyreRepair.ID,
+		tyreRepair.TyreID,
+		tyreRepair.WorkDate,
+		tyreRepair.Position,
+		tyreRepair.Odo)
+
+	if err != nil {
+		fmt.Println("Error creating tyre repair entry")
+		return err
+	}
+
+	fmt.Println("Tyre repair entry created")
 	return nil
 }
