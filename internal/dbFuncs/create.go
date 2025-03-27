@@ -51,7 +51,14 @@ func CreateTrucksTable() error {
 	}
 	defer db.Close()
 
-	trucksTable, err := db.Prepare("CREATE TABLE IF NOT EXISTS trucks (id TEXT, make TEXT, model TEXT, year INTEGER, registration TEXT, archived BOOLEAN)")
+	trucksTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS trucks (	
+		id TEXT PRIMARY KEY UNIQUE,
+		make TEXT,
+		model TEXT,
+		year INTEGER,
+		registration TEXT,
+		archived BOOLEAN
+		)`)
 	if err != nil {
 		fmt.Println("Error preparing table creation:", err)
 		return err
@@ -59,6 +66,121 @@ func CreateTrucksTable() error {
 	defer trucksTable.Close()
 
 	_, err = trucksTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}
+
+func CreateTrailersTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	trailersTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS trailers (
+		id TEXT PRIMARY KEY UNIQUE,
+		make TEXT,
+		model TEXT,
+		year INTEGER,
+		registration TEXT,
+		archived BOOLEAN
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer trailersTable.Close()
+
+	_, err = trailersTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}
+
+func CreateCombinationTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	combinationsTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS combinations (
+		id TEXT PRIMARY KEY UNIQUE,
+		truck_id TEXT,
+		trailer_id TEXT,
+		archived BOOLEAN
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer combinationsTable.Close()
+
+	_, err = combinationsTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}
+
+func CreateTyreCheckTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	tyreCheckTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrechecks (
+	id TEXT PRIMARY KEY UNIQUE,
+	tyre_id TEXT,
+	date TIMESTAMP,
+	position TEXT,
+	odo INTEGER
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer tyreCheckTable.Close()
+
+	_, err = tyreCheckTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}
+
+func CreateTyreRepairTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	tyreRepairTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrerepairs (
+		id TEXT PRIMARY KEY UNIQUE,
+		tyre_id TEXT,
+		date TIMESTAMP,
+		odo INTEGER
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer tyreRepairTable.Close()
+
+	_, err = tyreRepairTable.Exec()
 	if err != nil {
 		fmt.Println("Error executing table creation:", err)
 		return err
