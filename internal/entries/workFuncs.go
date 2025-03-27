@@ -39,3 +39,15 @@ func RepairTyre() error {
 
 	return nil
 }
+
+func SendRetread() error {
+	tyreID := ReadString("Please enter tyre ID: ")
+	tyre, err := dbFuncs.ReadTyre(tyreID)
+	if err != nil {
+		return err
+	}
+
+	tyre.Model = tyre.Model + "Retread"
+
+	return nil
+}

@@ -167,6 +167,7 @@ func CreateTyreRepairEntry(tyreRepair *models.TyreWork) error {
 }
 
 func CreateRetreadSentEntry(retreadSent *models.Tyre) error {
+	// Will need logic in workFuncs and readEntry.go
 	return nil
 }
 
