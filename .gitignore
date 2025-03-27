@@ -2,3 +2,4 @@ tyrecheck
 tyrecheck.db
 layout.txt
 go.sum
+.env
