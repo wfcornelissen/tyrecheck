@@ -1,11 +1,9 @@
 package main
 
 import (
-	_ "github.com/wfcornelissen/tyrecheck/internal/cmd"
-	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
+	"github.com/wfcornelissen/tyrecheck/internal/cmd"
 )
 
 func main() {
-	dbFuncs.CreateTyresTable()
-
+	cmd.Execute()
 }
