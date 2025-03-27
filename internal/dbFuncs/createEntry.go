@@ -119,17 +119,17 @@ func CreateCombinationEntry(combination *models.Combination) error {
 	return nil
 }
 
-func CreateTyreCheckEntry(tyreCheck *models.TyreCheck) error {
+func CreateTyreCheckEntry(tyreCheck *models.TyreWork) error {
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
 		return err
 	}
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO tyrechecks (id, tyreID, checkDate, position, odo) VALUES (?, ?, ?, ?, ?)",
+	_, err = db.Exec("INSERT INTO tyrechecks (id, tyreID, workDate, position, odo) VALUES (?, ?, ?, ?, ?)",
 		tyreCheck.ID,
 		tyreCheck.TyreID,
-		tyreCheck.CheckDate,
+		tyreCheck.WorkDate,
 		tyreCheck.Position,
 		tyreCheck.Odo)
 

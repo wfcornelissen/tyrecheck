@@ -32,12 +32,12 @@ var TyreSize = map[int]string{
 	385: "385",
 }
 
-type TyreCheck struct {
-	ID        string    `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
-	TyreID    string    `db:"tyreID" sqlite:"TEXT"`
-	CheckDate time.Time `db:"checkDate" sqlite:"TEXT"`
-	Position  string    `db:"position" sqlite:"TEXT"`
-	Odo       int       `db:"odo" sqlite:"INTEGER"`
+type TyreWork struct {
+	ID       string    `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
+	TyreID   string    `db:"tyreID" sqlite:"TEXT"`
+	WorkDate time.Time `db:"workDate" sqlite:"TEXT"`
+	Position string    `db:"position" sqlite:"TEXT"`
+	Odo      int       `db:"odo" sqlite:"INTEGER"`
 }
 
 func (t Tyre) String() string {

@@ -9,11 +9,11 @@ import (
 )
 
 func CheckTyre() error {
-	tyreCheck := models.TyreCheck{
-		TyreID:    ReadString("Please enter tyre ID: "),
-		CheckDate: time.Now(),
-		Position:  ReadString("Please enter tyre position: "),
-		Odo:       ReadInt("Please enter tyre odo: "),
+	tyreCheck := models.TyreWork{
+		TyreID:   ReadString("Please enter tyre ID: "),
+		WorkDate: time.Now(),
+		Position: ReadString("Please enter tyre position: "),
+		Odo:      ReadInt("Please enter tyre odo: "),
 	}
 	if ConfirmEntry(tyreCheck) {
 		dbFuncs.CreateTyreCheckEntry(&tyreCheck)
@@ -21,5 +21,9 @@ func CheckTyre() error {
 		fmt.Println("Tyre check not logged")
 	}
 
+	return nil
+}
+
+func RepairTyre() error {
 	return nil
 }
