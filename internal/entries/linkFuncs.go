@@ -179,6 +179,7 @@ func AssignTyre(fleetNum string, tyreID string) error {
 	} else {
 		// Only ask for location and update if there was an old tyre
 		oldTyre.Location = ReadString("Enter the location for the old tyre: ")
+		time.Sleep(100 * time.Millisecond)
 		_, err = db.Exec("UPDATE tyres SET location =? WHERE id = ?", oldTyre.Location, oldTyre.ID)
 		if err != nil {
 			fmt.Println("Error updating old tyre location:", err)

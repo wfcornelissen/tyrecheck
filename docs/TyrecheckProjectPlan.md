@@ -67,6 +67,7 @@ WM stores **Truck, Trailer, and Tyre** information in an **SQL database**. Durin
   - View: ✓
 
 ### Phase 2
+- Refactor code to move database interactions to their own functions instead of being built in to specific command functions.
 - Higher-level commands: **Link and Work Done** commands.
   - Link:
     - Truck and Trailer ✓

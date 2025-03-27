@@ -5,17 +5,18 @@ import (
 )
 
 type Tyre struct {
-	ID            string
-	Size          string
-	Brand         string
-	Supplier      string
-	Price         float64
-	Position      string
-	Location      string
-	State         string
-	Condition     int
-	StartingTread float64
-	Archived      bool
+	ID            string  `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
+	Size          int     `db:"size" sqlite:"INTEGER"`
+	Brand         string  `db:"brand" sqlite:"TEXT"`
+	Model         string  `db:"model" sqlite:"TEXT"`
+	Supplier      string  `db:"supplier" sqlite:"TEXT"`
+	Price         float64 `db:"price" sqlite:"REAL"`
+	Position      string  `db:"position" sqlite:"TEXT"`
+	Location      string  `db:"location" sqlite:"TEXT"`
+	State         string  `db:"state" sqlite:"TEXT"`
+	Condition     int     `db:"condition" sqlite:"INTEGER"`
+	StartingTread float64 `db:"startingTread" sqlite:"REAL"`
+	Archived      bool    `db:"archived" sqlite:"BOOLEAN"`
 }
 
 var TyreState = map[int]string{
@@ -31,7 +32,7 @@ var TyreSize = map[int]string{
 }
 
 func (t Tyre) String() string {
-	return fmt.Sprintf("Tyre ID: %s\nSize: %s\nBrand: %s\nSupplier: %s\nPrice: %2f\nPosition: %s\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
+	return fmt.Sprintf("Tyre ID: %s\nSize: %d\nBrand: %s\nModel: %s\nSupplier: %s\nPrice: %2f\nPosition: %s\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Model, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
 }
 func (t Tyre) SetPosition(position string) {
 	t.Position = position
