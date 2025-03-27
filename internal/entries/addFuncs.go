@@ -30,6 +30,11 @@ func AddTrailer() (models.Trailer, error) {
 		return trailer, nil
 	}
 
+	err := dbFuncs.CreateTrailerEntry(&trailer)
+	if err != nil {
+		return models.Trailer{}, err
+	}
+
 	return trailer, nil
 }
 
@@ -52,6 +57,11 @@ func AddTruck() (models.Truck, error) {
 			return models.Truck{}, err
 		}
 		return truck, nil
+	}
+
+	err := dbFuncs.CreateTruckEntry(&truck)
+	if err != nil {
+		return models.Truck{}, err
 	}
 
 	return truck, nil

@@ -48,10 +48,54 @@ func CreateTyreEntry(tyre *models.Tyre) error {
 }
 
 func CreateTruckEntry(truck *models.Truck) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO trucks (fleetNum, vin, reg, make, model, year, odo, scrap, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		truck.FleetNum,
+		truck.VIN,
+		truck.Reg,
+		truck.Make,
+		truck.Model,
+		truck.Year,
+		truck.Odo,
+		truck.Scrap,
+		truck.Archived)
+	if err != nil {
+		fmt.Println("Error creating truck entry")
+		return err
+	}
+
+	fmt.Println("Truck entry created")
 	return nil
 }
 
 func CreateTrailerEntry(trailer *models.Trailer) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO trailers (fleetNum, vin, reg, make, model, year, scrap, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+		trailer.FleetNum,
+		trailer.VIN,
+		trailer.Reg,
+		trailer.Make,
+		trailer.Model,
+		trailer.Year,
+		trailer.Scrap,
+		trailer.Archived)
+	if err != nil {
+		fmt.Println("Error creating trailer entry")
+		return err
+	}
+
+	fmt.Println("Trailer entry created")
+
 	return nil
 }
 
