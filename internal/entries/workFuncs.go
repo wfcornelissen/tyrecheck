@@ -1,5 +1,12 @@
 package entries
 
+import (
+	"time"
+
+	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
+	"github.com/wfcornelissen/tyrecheck/internal/models"
+)
+
 // Defunct in this branch
 /*func CheckTyre(tyrePosition string) error {
 	fmt.Println("Logging tyre check")
@@ -24,3 +31,16 @@ package entries
 	return nil
 }
 */
+
+func CheckTyre() error {
+	tyreCheck := models.TyreCheck{
+		TyreID:    ReadString("Please enter tyre ID: "),
+		CheckDate: time.Now(),
+		Position:  ReadString("Please enter tyre position: "),
+		Odo:       ReadInt("Please enter tyre odo: "),
+	}
+	if ConfirmEntry(tyreCheck) {
+		dbFuncs.CreateTyreCheckEntry(&tyreCheck)
+	}
+
+}

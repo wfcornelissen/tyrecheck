@@ -119,7 +119,8 @@ func CreateCombinationEntry(combination *models.Combination) error {
 	return nil
 }
 
-func CreateTyreCheckEntry(tyreCheck *models.Tyre) error {
+func CreateTyreCheckEntry(tyreCheck *models.TyreCheck) error {
+
 	return nil
 }
 
