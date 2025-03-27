@@ -1,6 +1,7 @@
 package entries
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
@@ -41,6 +42,9 @@ func CheckTyre() error {
 	}
 	if ConfirmEntry(tyreCheck) {
 		dbFuncs.CreateTyreCheckEntry(&tyreCheck)
+	} else {
+		fmt.Println("Tyre check not logged")
 	}
 
+	return nil
 }
