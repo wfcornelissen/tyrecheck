@@ -1,12 +1,7 @@
 package entries
 
-import (
-	"database/sql"
-	"fmt"
-	"time"
-)
-
-func CheckTyre(tyrePosition string) error {
+// Defunct in this branch
+/*func CheckTyre(tyrePosition string) error {
 	fmt.Println("Logging tyre check")
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
@@ -28,3 +23,4 @@ func CheckTyre(tyrePosition string) error {
 
 	return nil
 }
+*/

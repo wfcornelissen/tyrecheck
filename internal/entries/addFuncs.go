@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
+	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
@@ -79,7 +80,8 @@ func AddTyre() (models.Tyre, error) {
 		return tyre, nil
 	}
 
-	if err := UploadTyreToDb(tyre); err != nil {
+	err := dbFuncs.CreateTyreEntry(&tyre)
+	if err != nil {
 		return models.Tyre{}, err
 	}
 	return tyre, nil
