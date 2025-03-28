@@ -273,5 +273,32 @@ func CreateRetreadScrapTable() error {
 }
 
 func CreateTyreRotateTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	tyreRotateTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrerotates (
+		id TEXT PRIMARY KEY UNIQUE,
+		tyre_id TEXT,
+		old_position TEXT,
+		new_position TEXT,
+		date_rotated TIMESTAMP,
+		odo INTEGER
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer tyreRotateTable.Close()
+
+	_, err = tyreRotateTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+
 	return nil
 }
