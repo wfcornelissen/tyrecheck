@@ -38,6 +38,11 @@ var RetreadState = map[int]string{
 	3: "Retread Scrapped",
 }
 
+var Rotate = map[int]string{
+	1: "On rim",
+	2: "With other tyre",
+}
+
 type TyreWork struct {
 	ID       string    `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
 	TyreID   string    `db:"tyreID" sqlite:"TEXT"`

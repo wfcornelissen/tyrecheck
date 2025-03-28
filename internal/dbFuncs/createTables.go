@@ -271,3 +271,7 @@ func CreateRetreadScrapTable() error {
 	}
 	return nil
 }
+
+func CreateTyreRotateTable() error {
+	return nil
+}

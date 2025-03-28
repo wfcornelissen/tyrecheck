@@ -1,7 +1,6 @@
 package entries
 
 import (
-	"database/sql"
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -95,26 +94,4 @@ func AddTyre() (models.Tyre, error) {
 		return models.Tyre{}, err
 	}
 	return tyre, nil
-}
-
-func UploadTyreToDb(tyre models.Tyre) error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	db.Exec("CREATE TABLE IF NOT EXISTS tyres (id TEXT, size TEXT, brand TEXT, supplier TEXT, price REAL, position TEXT, location TEXT, state TEXT, condition INTEGER, startingTread REAL, archived BOOLEAN)")
-
-	record, err := db.Prepare("INSERT INTO tyres (id, size, brand, supplier, price, position, location, state, condition, startingTread, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)")
-	if err != nil {
-		return err
-	}
-	defer record.Close()
-
-	_, err = record.Exec(tyre.ID, tyre.Size, tyre.Brand, tyre.Supplier, tyre.Price, tyre.Position, tyre.Location, tyre.State, tyre.Condition, tyre.StartingTread, tyre.Archived)
-	if err != nil {
-		return err
-	}
-	return nil
 }

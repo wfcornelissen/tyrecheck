@@ -72,8 +72,8 @@ func Retread() error {
 }
 
 func SendRetread() error {
-	tyreID := ReadString("Please enter tyre ID: ")
-	tyre, err := dbFuncs.ReadTyre(tyreID)
+	tyreID := ReadString("Please enter tyre Pos: ")
+	tyre, err := dbFuncs.ReadTyrePos(tyreID)
 	if err != nil {
 		return err
 	}
@@ -96,7 +96,7 @@ func SendRetread() error {
 
 func ReceiveRetread() error {
 	tyreID := ReadString("Please enter tyre ID: ")
-	tyre, err := dbFuncs.ReadTyre(tyreID)
+	tyre, err := dbFuncs.ReadTyreID(tyreID)
 	if err != nil {
 		return err
 	}
@@ -119,7 +119,7 @@ func ReceiveRetread() error {
 
 func ScrapRetread() error {
 	tyreID := ReadString("Please enter tyre ID: ")
-	tyre, err := dbFuncs.ReadTyre(tyreID)
+	tyre, err := dbFuncs.ReadTyreID(tyreID)
 	if err != nil {
 		return err
 	}
@@ -140,7 +140,7 @@ func ScrapRetread() error {
 }
 
 func RemoveTyreWork(tyreID string) error {
-	tyre, err := dbFuncs.ReadTyre(tyreID)
+	tyre, err := dbFuncs.ReadTyreID(tyreID)
 	if err != nil {
 		return err
 	}
@@ -151,4 +151,58 @@ func RemoveTyreWork(tyreID string) error {
 	dbFuncs.CreateTyreEntry(&tyre)
 
 	return nil
+}
+
+func Rotate() error {
+	rotate := ReadInt("Please select from the below list:")
+	for i := 0; i <= len(models.Rotate); i++ {
+		fmt.Println(i, models.Rotate[i])
+	}
+
+	switch rotate {
+	case 1:
+		return RotateTyres()
+	case 2:
+		return RotateTyreOnRim()
+
+	}
+
+	return nil
+}
+
+func RotateTyres() error {
+	fleetNum := ReadString("Please enter fleetnum of tyre 1: ")
+	tyre1 := ReadString("Please enter position of tyre 1: ")
+	tyre2 := ReadString("Please enter position of tyre 2: ")
+
+	tyrepos1 := fleetNum + tyre1
+	tyrepos2 := fleetNum + tyre2
+
+	tyretype1, err := dbFuncs.ReadTyrePos(tyrepos1)
+	if err != nil {
+		return err
+	}
+	tyretype2, err := dbFuncs.ReadTyrePos(tyrepos2)
+	if err != nil {
+		return err
+	}
+
+	tyretype1.Position, tyretype2.Position = tyretype2.Position, tyretype1.Position
+
+	dbFuncs.CreateTyreEntry(&tyretype1)
+	dbFuncs.CreateTyreEntry(&tyretype2)
+
+	return nil
+}
+
+func RotateTyreOnRim() error {
+	fleetNum := ReadString("Please enter fleetnum: ")
+	tyrePos := ReadString("Please enter position: ")
+
+	tyrePos := fleetNum + tyrePos
+	tyre, err := dbFuncs.ReadTyrePos(tyrePos)
+	if err != nil {
+		return err
+	}
+
 }
