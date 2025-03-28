@@ -32,9 +32,12 @@ func RepairTyre() error {
 		Odo:      ReadInt("Please enter tyre odo: "),
 	}
 	if ConfirmEntry(tyreRepair) {
-		dbFuncs.CreateTyreRepairEntry(&tyreRepair)
+		err := dbFuncs.CreateTyreRepairEntry(&tyreRepair)
+		if err != nil {
+			return err
+		}
 	} else {
-		fmt.Println("Tyre repair not logged")
+		return fmt.Errorf("tyre repair not logged")
 	}
 
 	return nil
