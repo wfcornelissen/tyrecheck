@@ -22,11 +22,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("tyre called")
-		tyreID := entries.ReadString("Please enter tyreID: ")
-		err := entries.RemoveTyre(tyreID)
-		if err != nil {
-			fmt.Println("Error removing tyre:", err)
-		}
+		entries.RemoveTyre()
 	},
 }
 

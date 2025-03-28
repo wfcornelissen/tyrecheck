@@ -79,3 +79,31 @@ func DeleteTruck(fleetNum string) (models.Truck, *sql.Stmt, error) {
 
 	return truck, stmt, nil
 }
+
+func DeleteTyre(tyreID string) (models.Tyre, *sql.Stmt, error) {
+	// Check if tyre exists
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return models.Tyre{}, nil, err
+	}
+	defer db.Close()
+
+	// Extract tyre into struct variable from db
+	var tyre models.Tyre
+	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+	if err != nil {
+		fmt.Println("Tyre not found")
+		return models.Tyre{}, nil, err
+	}
+
+	if tyre.Archived {
+		return models.Tyre{}, nil, fmt.Errorf("tyre already removed")
+	}
+
+	stmt, err := db.Prepare("UPDATE tyres SET archived = true WHERE id = ?")
+	if err != nil {
+		return models.Tyre{}, nil, err
+	}
+
+	return tyre, stmt, nil
+}

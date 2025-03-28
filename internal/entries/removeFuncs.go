@@ -1,12 +1,10 @@
 package entries
 
 import (
-	"database/sql"
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
-	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
 // Finished - Set a trailer scrap status to true
@@ -43,37 +41,18 @@ func RemoveTruck() error {
 	return nil
 }
 
-func RemoveTyre(tyreID string) error {
-	fmt.Println("Removing tyre with ID:", tyreID)
-
-	// Open SQLite db
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	// Extract tyre into struct variable from db
-	var tyre models.Tyre
-	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+func RemoveTyre() error {
+	tyreID := ReadString("Please enter tyreID: ")
+	tyre, stmt, err := dbFuncs.DeleteTyre(tyreID)
 	if err != nil {
 		return err
 	}
 
-	// Check if tyre is already removed
-	if tyre.State == "Scrap" {
-		return fmt.Errorf("tyre already removed")
-	}
-
-	// Confirm removal
 	if ConfirmEntry(tyre) {
-		tyre.State = "Scrap"
-		tyre.Archived = true
-		_, err = db.Exec("UPDATE tyres SET state = 'Scrap', archived = true WHERE id = ?", tyreID)
-		if err != nil {
-			return err
-		}
+		dbFuncs.Delete(stmt)
 	}
+
+	fmt.Println("Tyre removed successfully")
 
 	return nil
 }
