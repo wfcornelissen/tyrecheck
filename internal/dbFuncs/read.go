@@ -54,3 +54,19 @@ func ReadTyrePos(tyrePos string) (models.Tyre, error) {
 
 	return tyre, nil
 }
+
+func ReadTruckID(fleetNum string) (models.Truck, error) {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return models.Truck{}, err
+	}
+	defer db.Close()
+
+	var truck models.Truck
+	err = db.QueryRow("SELECT * FROM trucks WHERE fleet_num = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap)
+	if err != nil {
+		return models.Truck{}, err
+	}
+
+	return truck, nil
+}

@@ -22,19 +22,12 @@ func ViewTrailer() error {
 	return nil
 }
 
-func ViewTruck(fleetNum string) error {
+func ViewTruck() error {
 	fmt.Println("ViewTruck called")
-
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	fleetNum := ReadString("Enter fleet number: ")
+	truck, err := dbFuncs.ReadTruckID(fleetNum)
 	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	var truck models.Truck
-	err = db.QueryRow("SELECT * FROM trucks WHERE fleet_num = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap)
-	if err != nil {
-		return err
+		fmt.Println("Error viewing truck:", err)
 	}
 
 	fmt.Println(truck)
