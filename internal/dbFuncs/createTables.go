@@ -9,61 +9,67 @@ import (
 )
 
 func CreateTables() error {
-	err := CreateTyresTable()
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	err = CreateTyresTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Tyres table created")
 	time.Sleep(1 * time.Second)
-	err = CreateTrucksTable()
+	err = CreateTrucksTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Trucks table created")
 	time.Sleep(1 * time.Second)
-	err = CreateTrailersTable()
+	err = CreateTrailersTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Trailers table created")
 	time.Sleep(1 * time.Second)
-	err = CreateCombinationTable()
+	err = CreateCombinationTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Combinations table created")
 	time.Sleep(1 * time.Second)
-	err = CreateTyreCheckTable()
+	err = CreateTyreCheckTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Tyre checks table created")
 	time.Sleep(1 * time.Second)
-	err = CreateTyreRepairTable()
+	err = CreateTyreRepairTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Tyre repairs table created")
 	time.Sleep(1 * time.Second)
-	err = CreateRetreadSentTable()
+	err = CreateRetreadSentTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Retread sent table created")
 	time.Sleep(1 * time.Second)
-	err = CreateRetreadReceivedTable()
+	err = CreateRetreadReceivedTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Retread received table created")
 	time.Sleep(1 * time.Second)
-	err = CreateRetreadScrapTable()
+	err = CreateRetreadScrapTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Retread scrap table created")
 	time.Sleep(1 * time.Second)
-	err = CreateTyreRotateTable()
+	err = CreateTyreRotateTable(db)
 	if err != nil {
 		return err
 	}
@@ -71,14 +77,7 @@ func CreateTables() error {
 	return nil
 }
 
-func CreateTyresTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateTyresTable(db *sql.DB) error {
 	tyresTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyres (
 		id TEXT PRIMARY KEY,
 		size INTEGER,
@@ -107,14 +106,7 @@ func CreateTyresTable() error {
 	return nil
 }
 
-func CreateTrucksTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateTrucksTable(db *sql.DB) error {
 	trucksTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS trucks (	
 		id TEXT PRIMARY KEY UNIQUE,
 		make TEXT,
@@ -137,14 +129,7 @@ func CreateTrucksTable() error {
 	return nil
 }
 
-func CreateTrailersTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateTrailersTable(db *sql.DB) error {
 	trailersTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS trailers (
 		id TEXT PRIMARY KEY UNIQUE,
 		make TEXT,
@@ -167,14 +152,7 @@ func CreateTrailersTable() error {
 	return nil
 }
 
-func CreateCombinationTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateCombinationTable(db *sql.DB) error {
 	combinationsTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS combinations (
 		id TEXT PRIMARY KEY UNIQUE,
 		truck_id TEXT,
@@ -195,14 +173,7 @@ func CreateCombinationTable() error {
 	return nil
 }
 
-func CreateTyreCheckTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateTyreCheckTable(db *sql.DB) error {
 	tyreCheckTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrechecks (
 	id TEXT PRIMARY KEY UNIQUE,
 	tyre_id TEXT,
@@ -224,14 +195,7 @@ func CreateTyreCheckTable() error {
 	return nil
 }
 
-func CreateTyreRepairTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateTyreRepairTable(db *sql.DB) error {
 	tyreRepairTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrerepairs (
 		id TEXT PRIMARY KEY UNIQUE,
 		tyre_id TEXT,
@@ -252,14 +216,7 @@ func CreateTyreRepairTable() error {
 	return nil
 }
 
-func CreateRetreadSentTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateRetreadSentTable(db *sql.DB) error {
 	retreadTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS retreadsSent (
 		id TEXT PRIMARY KEY UNIQUE,
 		tyre_id TEXT,
@@ -280,14 +237,7 @@ func CreateRetreadSentTable() error {
 	return nil
 }
 
-func CreateRetreadReceivedTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateRetreadReceivedTable(db *sql.DB) error {
 	retreadReceivedTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS retreadsReceived (
 		id TEXT PRIMARY KEY UNIQUE,
 		tyre_id TEXT,
@@ -308,14 +258,7 @@ func CreateRetreadReceivedTable() error {
 	return nil
 }
 
-func CreateRetreadScrapTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateRetreadScrapTable(db *sql.DB) error {
 	retreadScrapTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS retreadsScrap (
 		id TEXT PRIMARY KEY UNIQUE,
 		tyre_id TEXT,
@@ -336,14 +279,7 @@ func CreateRetreadScrapTable() error {
 	return nil
 }
 
-func CreateTyreRotateTable() error {
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
-
+func CreateTyreRotateTable(db *sql.DB) error {
 	tyreRotateTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrerotates (
 		id TEXT PRIMARY KEY UNIQUE,
 		tyre_id TEXT,

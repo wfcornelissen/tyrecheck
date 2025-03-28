@@ -46,6 +46,7 @@ func addSubCmd(cmd *cobra.Command) {
 	cmd.AddCommand(view.ViewCmd)
 	cmd.AddCommand(link.LinkCmd)
 	cmd.AddCommand(work.WorkCmd)
+	cmd.AddCommand(dbCreateCmd)
 }
 
 func init() {
