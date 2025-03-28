@@ -190,6 +190,9 @@ func RotateTyres() error {
 	tyretype1.Position, tyretype2.Position = tyretype2.Position, tyretype1.Position
 
 	dbFuncs.CreateTyreEntry(&tyretype1)
+
+	time.Sleep(1 * time.Second)
+
 	dbFuncs.CreateTyreEntry(&tyretype2)
 
 	return nil
@@ -199,10 +202,21 @@ func RotateTyreOnRim() error {
 	fleetNum := ReadString("Please enter fleetnum: ")
 	tyrePos := ReadString("Please enter position: ")
 
-	tyrePos := fleetNum + tyrePos
-	tyre, err := dbFuncs.ReadTyrePos(tyrePos)
+	tyrePosition := fleetNum + tyrePos
+	tyre, err := dbFuncs.ReadTyrePos(tyrePosition)
 	if err != nil {
 		return err
 	}
 
+	workDate := ReadDate("Please enter work date: (dd/mm/yyyy)")
+	odo := ReadInt("Please enter odo: ")
+
+	err = dbFuncs.CreateTyreRotateEntry(&tyre, workDate, odo)
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("Tyre rotated")
+
+	return nil
 }

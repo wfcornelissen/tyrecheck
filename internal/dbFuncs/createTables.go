@@ -283,8 +283,7 @@ func CreateTyreRotateTable() error {
 	tyreRotateTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyrerotates (
 		id TEXT PRIMARY KEY UNIQUE,
 		tyre_id TEXT,
-		old_position TEXT,
-		new_position TEXT,
+		position TEXT,
 		date_rotated TIMESTAMP,
 		odo INTEGER
 	)`)

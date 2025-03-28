@@ -224,3 +224,32 @@ func CreateRetreadScrapEntry(retreadScrap *models.Tyre, WorkDate time.Time, Odo 
 
 	return nil
 }
+
+func CreateTyreRotateEntry(tyreRotate *models.Tyre, WorkDate time.Time, Odo int) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO tyrerotates (id, tyreID, position, dateRotated, odo) VALUES (?, ?, ?, ?, ?)",
+		tyreRotate.ID,
+		tyreRotate.Position,
+		WorkDate,
+		Odo)
+
+	if err != nil {
+		fmt.Println("Error creating tyre rotate entry")
+		return err
+	}
+
+	return nil
+}
+
+/*
+id TEXT PRIMARY KEY UNIQUE,
+		tyre_id TEXT,
+		position TEXT,
+		date_rotated TIMESTAMP,
+		odo INTEGER
+*/
