@@ -11,7 +11,7 @@ import (
 func CheckTyre() error {
 	tyreCheck := models.TyreWork{
 		TyreID:   ReadString("Please enter tyre ID: "),
-		WorkDate: time.Now(),
+		WorkDate: ReadDate("Please enter date work was done: "),
 		Position: ReadString("Please enter tyre position: "),
 		Odo:      ReadInt("Please enter tyre odo: "),
 	}
@@ -27,7 +27,7 @@ func CheckTyre() error {
 func RepairTyre() error {
 	tyreRepair := models.TyreWork{
 		TyreID:   ReadString("Please enter tyre ID: "),
-		WorkDate: time.Now(),
+		WorkDate: ReadDate("Please enter date work was done: "),
 		Position: ReadString("Please enter tyre position: "),
 		Odo:      ReadInt("Please enter tyre odo: "),
 	}

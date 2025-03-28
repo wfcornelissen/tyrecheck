@@ -6,6 +6,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 )
 
 func ReadString(prompt string) string {
@@ -29,4 +30,19 @@ func ReadFloat(prompt string) float64 {
 	var input float64
 	fmt.Scanln(&input)
 	return input
+}
+
+func ReadDate(prompt string) time.Time {
+	fmt.Printf("%s (format: YYYY-MM-DD): ", prompt)
+	var dateStr string
+	fmt.Scanln(&dateStr)
+
+	// Parse the date string
+	date, err := time.Parse("2006-01-02", dateStr)
+	if err != nil {
+		fmt.Println("Invalid date format. Please use YYYY-MM-DD")
+		return ReadDate(prompt) // Recursively ask for input until valid
+	}
+
+	return date
 }

@@ -187,3 +187,31 @@ func CreateTyreRepairTable() error {
 	}
 	return nil
 }
+
+func CreateRetreadSentTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	retreadTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS retreadsSent (
+		id TEXT PRIMARY KEY UNIQUE,
+		tyre_id TEXT,
+		date_sent TIMESTAMP,
+		odo INTEGER
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer retreadTable.Close()
+
+	_, err = retreadTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}
