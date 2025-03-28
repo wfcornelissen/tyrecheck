@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
 // removeCmd represents the remove command
@@ -19,6 +20,11 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("remove called")
 		// Call workFuncs from here
+		err := entries.RemoveTyreWork(args[0])
+		if err != nil {
+			fmt.Println("Error removing tyre work:", err)
+		}
+		fmt.Println("Tyre work removed")
 	},
 }
 
