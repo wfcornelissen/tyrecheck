@@ -135,3 +135,17 @@ func ScrapRetread() error {
 
 	return nil
 }
+
+func RemoveTyreWork(tyreID string) error {
+	tyre, err := dbFuncs.ReadTyre(tyreID)
+	if err != nil {
+		return err
+	}
+
+	tyre.Location = ReadString("Please enter location: ")
+	tyre.Position = "NULL"
+
+	dbFuncs.CreateTyreEntry(&tyre)
+
+	return nil
+}
