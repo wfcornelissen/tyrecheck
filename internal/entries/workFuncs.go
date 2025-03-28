@@ -101,7 +101,6 @@ func ReceiveRetread() error {
 		return err
 	}
 
-	tyre.Model = tyre.Model
 	tyre.Position = "NULL"
 	tyre.State = "Used"
 	tyre.Location = "ReceivedRetread"
