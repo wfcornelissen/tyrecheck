@@ -3,9 +3,73 @@ package dbFuncs
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
+
+func CreateTables() error {
+	err := CreateTyresTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Tyres table created")
+	time.Sleep(1 * time.Second)
+	err = CreateTrucksTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Trucks table created")
+	time.Sleep(1 * time.Second)
+	err = CreateTrailersTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Trailers table created")
+	time.Sleep(1 * time.Second)
+	err = CreateCombinationTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Combinations table created")
+	time.Sleep(1 * time.Second)
+	err = CreateTyreCheckTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Tyre checks table created")
+	time.Sleep(1 * time.Second)
+	err = CreateTyreRepairTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Tyre repairs table created")
+	time.Sleep(1 * time.Second)
+	err = CreateRetreadSentTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Retread sent table created")
+	time.Sleep(1 * time.Second)
+	err = CreateRetreadReceivedTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Retread received table created")
+	time.Sleep(1 * time.Second)
+	err = CreateRetreadScrapTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Retread scrap table created")
+	time.Sleep(1 * time.Second)
+	err = CreateTyreRotateTable()
+	if err != nil {
+		return err
+	}
+	fmt.Println("Tyre rotate table created")
+	return nil
+}
 
 func CreateTyresTable() error {
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
