@@ -65,7 +65,7 @@ func Retread() error {
 		}
 		return nil
 	}
-
+	return fmt.Errorf("invalid option")
 }
 
 func SendRetread() error {
@@ -76,13 +76,17 @@ func SendRetread() error {
 	}
 
 	tyre.Model = tyre.Model + "Retread"
-	tyre.Position = "Retread"
+	tyre.Position = "NULL"
 	tyre.State = "Used"
 	tyre.Location = "SentRetread"
 
 	dbFuncs.CreateTyreEntry(&tyre)
+
 	time.Sleep(1 * time.Second)
-	dbFuncs.CreateRetreadSentEntry(&tyre)
+
+	workDate := ReadDate("Please enter work date: (dd/mm/yyyy)")
+	odo := ReadInt("Please enter odo: ")
+	dbFuncs.CreateRetreadSentEntry(&tyre, workDate, odo)
 
 	return nil
 }
@@ -95,13 +99,18 @@ func ReceiveRetread() error {
 	}
 
 	tyre.Model = tyre.Model
-	tyre.Position = "Retread"
+	tyre.Position = "NULL"
 	tyre.State = "Used"
 	tyre.Location = "ReceivedRetread"
 
 	dbFuncs.CreateTyreEntry(&tyre)
+
 	time.Sleep(1 * time.Second)
-	dbFuncs.CreateRetreadReceivedEntry(&tyre)
+
+	workDate := ReadDate("Please enter work date: (dd/mm/yyyy)")
+	odo := ReadInt("Please enter odo: ")
+	dbFuncs.CreateRetreadReceivedEntry(&tyre, workDate, odo)
+
 	return nil
 }
 
@@ -117,8 +126,12 @@ func ScrapRetread() error {
 	tyre.Location = "Scrap"
 
 	dbFuncs.CreateTyreEntry(&tyre)
+
 	time.Sleep(1 * time.Second)
-	dbFuncs.CreateRetreadScrapEntry(&tyre)
+
+	workDate := ReadDate("Please enter work date: (dd/mm/yyyy)")
+	odo := ReadInt("Please enter odo: ")
+	dbFuncs.CreateRetreadScrapEntry(&tyre, workDate, odo)
 
 	return nil
 }

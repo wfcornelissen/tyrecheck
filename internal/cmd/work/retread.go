@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
 // retreadCmd represents the retread command
@@ -18,7 +19,7 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("retread called")
-		err := workFuncs.Retread()
+		err := entries.Retread()
 		if err != nil {
 			fmt.Println("Error:", err)
 		}

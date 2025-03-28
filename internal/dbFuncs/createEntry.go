@@ -3,6 +3,7 @@ package dbFuncs
 import (
 	"database/sql"
 	"fmt"
+	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
@@ -166,7 +167,7 @@ func CreateTyreRepairEntry(tyreRepair *models.TyreWork) error {
 	return nil
 }
 
-func CreateRetreadSentEntry(retreadSent *models.TyreWork) error {
+func CreateRetreadSentEntry(retreadSent *models.Tyre, WorkDate time.Time, Odo int) error {
 	// Will need logic in workFuncs and readEntry.go
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
@@ -176,15 +177,20 @@ func CreateRetreadSentEntry(retreadSent *models.TyreWork) error {
 
 	_, err = db.Exec("INSERT INTO retreadSent (id, tyreID, workDate, position, odo) VALUES (?, ?, ?, ?, ?)",
 		retreadSent.ID,
-		retreadSent.TyreID,
-		retreadSent.WorkDate,
-		retreadSent.Position,
-		retreadSent.Odo)
+		WorkDate,
+		Odo)
+
+	if err != nil {
+		fmt.Println("Error creating retread sent entry")
+		return err
+	}
+
+	fmt.Println("Retread sent entry created")
 
 	return nil
 }
 
-func CreateRetreadReceivedEntry(retreadReceived *models.TyreWork) error {
+func CreateRetreadReceivedEntry(retreadReceived *models.Tyre, WorkDate time.Time, Odo int) error {
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
 		return err
@@ -193,9 +199,8 @@ func CreateRetreadReceivedEntry(retreadReceived *models.TyreWork) error {
 
 	_, err = db.Exec("INSERT INTO retreadReceived (id, tyreID, dateReceived, odo) VALUES (?, ?, ?, ?)",
 		retreadReceived.ID,
-		retreadReceived.TyreID,
-		retreadReceived.WorkDate,
-		retreadReceived.Odo)
+		WorkDate,
+		Odo)
 
 	if err != nil {
 		fmt.Println("Error creating retread received entry")
@@ -207,7 +212,7 @@ func CreateRetreadReceivedEntry(retreadReceived *models.TyreWork) error {
 	return nil
 }
 
-func CreateRetreadScrapEntry(retreadScrap *models.TyreWork) error {
+func CreateRetreadScrapEntry(retreadScrap *models.Tyre, WorkDate time.Time, Odo int) error {
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
 		return err
@@ -216,9 +221,8 @@ func CreateRetreadScrapEntry(retreadScrap *models.TyreWork) error {
 
 	_, err = db.Exec("INSERT INTO retreadScrap (id, tyreID, dateScraped, odo) VALUES (?, ?, ?, ?)",
 		retreadScrap.ID,
-		retreadScrap.TyreID,
-		retreadScrap.WorkDate,
-		retreadScrap.Odo)
+		WorkDate,
+		Odo)
 
 	if err != nil {
 		fmt.Println("Error creating retread scrap entry")
