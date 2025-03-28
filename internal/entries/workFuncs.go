@@ -164,7 +164,6 @@ func Rotate() error {
 		return RotateTyres()
 	case 2:
 		return RotateTyreOnRim()
-
 	}
 
 	return nil
