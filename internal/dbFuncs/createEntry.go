@@ -245,11 +245,3 @@ func CreateTyreRotateEntry(tyreRotate *models.Tyre, WorkDate time.Time, Odo int)
 
 	return nil
 }
-
-/*
-id TEXT PRIMARY KEY UNIQUE,
-		tyre_id TEXT,
-		position TEXT,
-		date_rotated TIMESTAMP,
-		odo INTEGER
-*/
