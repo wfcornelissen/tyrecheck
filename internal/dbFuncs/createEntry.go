@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	_ "github.com/mattn/go-sqlite3"
-	"github.com/wfcornelissen/tyrecheck/internal/entries"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
@@ -167,7 +166,7 @@ func CreateTyreRepairEntry(tyreRepair *models.TyreWork) error {
 	return nil
 }
 
-func CreateRetreadSentEntry(retreadSent *models.Tyre) error {
+func CreateRetreadSentEntry(retreadSent *models.TyreWork) error {
 	// Will need logic in workFuncs and readEntry.go
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
@@ -175,18 +174,58 @@ func CreateRetreadSentEntry(retreadSent *models.Tyre) error {
 	}
 	defer db.Close()
 
-	workDate := entries.ReadString("Please enter work date: (dd/mm/yyyy)")
-	odo := entries.ReadInt("Please enter odo: ")
-
 	_, err = db.Exec("INSERT INTO retreadSent (id, tyreID, workDate, position, odo) VALUES (?, ?, ?, ?, ?)",
 		retreadSent.ID,
-		workDate,
+		retreadSent.TyreID,
+		retreadSent.WorkDate,
 		retreadSent.Position,
-		odo)
+		retreadSent.Odo)
 
 	return nil
 }
 
-func CreateRetreadReceivedEntry(retreadReceived *models.Tyre) error {
+func CreateRetreadReceivedEntry(retreadReceived *models.TyreWork) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO retreadReceived (id, tyreID, dateReceived, odo) VALUES (?, ?, ?, ?)",
+		retreadReceived.ID,
+		retreadReceived.TyreID,
+		retreadReceived.WorkDate,
+		retreadReceived.Odo)
+
+	if err != nil {
+		fmt.Println("Error creating retread received entry")
+		return err
+	}
+
+	fmt.Println("Retread received entry created")
+
+	return nil
+}
+
+func CreateRetreadScrapEntry(retreadScrap *models.TyreWork) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("INSERT INTO retreadScrap (id, tyreID, dateScraped, odo) VALUES (?, ?, ?, ?)",
+		retreadScrap.ID,
+		retreadScrap.TyreID,
+		retreadScrap.WorkDate,
+		retreadScrap.Odo)
+
+	if err != nil {
+		fmt.Println("Error creating retread scrap entry")
+		return err
+	}
+
+	fmt.Println("Retread scrap entry created")
+
 	return nil
 }

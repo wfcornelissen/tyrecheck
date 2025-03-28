@@ -215,3 +215,59 @@ func CreateRetreadSentTable() error {
 	}
 	return nil
 }
+
+func CreateRetreadReceivedTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	retreadReceivedTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS retreadsReceived (
+		id TEXT PRIMARY KEY UNIQUE,
+		tyre_id TEXT,
+		date_received TIMESTAMP,
+		odo INTEGER
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer retreadReceivedTable.Close()
+
+	_, err = retreadReceivedTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}
+
+func CreateRetreadScrapTable() error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		fmt.Println("Error opening database:", err)
+		return err
+	}
+	defer db.Close()
+
+	retreadScrapTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS retreadsScrap (
+		id TEXT PRIMARY KEY UNIQUE,
+		tyre_id TEXT,
+		date_scraped TIMESTAMP,
+		odo INTEGER
+	)`)
+	if err != nil {
+		fmt.Println("Error preparing table creation:", err)
+		return err
+	}
+	defer retreadScrapTable.Close()
+
+	_, err = retreadScrapTable.Exec()
+	if err != nil {
+		fmt.Println("Error executing table creation:", err)
+		return err
+	}
+	return nil
+}

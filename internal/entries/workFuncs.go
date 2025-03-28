@@ -47,12 +47,25 @@ func Retread() error {
 	}
 	switch sendOrReceive {
 	case 1:
-		SendRetread()
+		err := SendRetread()
+		if err != nil {
+			return err
+		}
+		return nil
 	case 2:
-		ReceiveRetread()
+		err := ReceiveRetread()
+		if err != nil {
+			return err
+		}
+		return nil
 	case 3:
-		ScrapRetread()
+		err := ScrapRetread()
+		if err != nil {
+			return err
+		}
+		return nil
 	}
+
 }
 
 func SendRetread() error {
@@ -75,8 +88,37 @@ func SendRetread() error {
 }
 
 func ReceiveRetread() error {
+	tyreID := ReadString("Please enter tyre ID: ")
+	tyre, err := dbFuncs.ReadTyre(tyreID)
+	if err != nil {
+		return err
+	}
+
+	tyre.Model = tyre.Model
+	tyre.Position = "Retread"
+	tyre.State = "Used"
+	tyre.Location = "ReceivedRetread"
+
+	dbFuncs.CreateTyreEntry(&tyre)
+	time.Sleep(1 * time.Second)
+	dbFuncs.CreateRetreadReceivedEntry(&tyre)
 	return nil
 }
 
 func ScrapRetread() error {
+	tyreID := ReadString("Please enter tyre ID: ")
+	tyre, err := dbFuncs.ReadTyre(tyreID)
+	if err != nil {
+		return err
+	}
+
+	tyre.Position = "Scrapped"
+	tyre.State = "Scrap"
+	tyre.Location = "Scrap"
+
+	dbFuncs.CreateTyreEntry(&tyre)
+	time.Sleep(1 * time.Second)
+	dbFuncs.CreateRetreadScrapEntry(&tyre)
+
 	return nil
+}
