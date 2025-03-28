@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
 	"github.com/wfcornelissen/tyrecheck/internal/entries"
 )
 
@@ -39,7 +40,7 @@ to quickly create a Cobra application.`,
 				fmt.Println("Error: Tyre ID cannot be empty")
 				return
 			}
-			_, err := entries.ViewTyre(tyreID)
+			_, err := dbFuncs.ReadTyreID(tyreID)
 			if err != nil {
 				fmt.Println("Error viewing tyre:", err)
 			}
