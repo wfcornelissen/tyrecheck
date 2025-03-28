@@ -70,3 +70,19 @@ func ReadTruckID(fleetNum string) (models.Truck, error) {
 
 	return truck, nil
 }
+
+func ReadCombo(truckFleetNum string) (models.Combination, error) {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return models.Combination{}, err
+	}
+	defer db.Close()
+
+	var combo models.Combination
+	err = db.QueryRow("SELECT * FROM combinations WHERE truck_fleet_num = ?", truckFleetNum).Scan(&combo.TruckFleetNum, &combo.TrailerFleetNum)
+	if err != nil {
+		return models.Combination{}, err
+	}
+
+	return combo, nil
+}

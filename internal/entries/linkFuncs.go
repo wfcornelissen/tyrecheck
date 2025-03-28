@@ -11,146 +11,27 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
-/*
-func ComboLink(truckFleetNum string, trailerFleetNum string) error {
-	err := checks.CheckExist(truckFleetNum)
-	if err != nil {
-		return err
-	}
-	err = checks.CheckExist(trailerFleetNum)
+func SwopTruckTrailer() error {
+	truckFleetNum1 := ReadString("Truck Fleet Number 1: ")
+	combo1, err := dbFuncs.ReadCombo(truckFleetNum1)
 	if err != nil {
 		return err
 	}
 
-	//Open db
-	db, err := sql.Open("sqlite3", "./tyrecheck.db?_journal=WAL&_busy_timeout=5000")
-	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	// Enable foreign keys
-	_, err = db.Exec("PRAGMA foreign_keys = ON;")
+	truckFleetNum2 := ReadString("Truck Fleet Number 2: ")
+	combo2, err := dbFuncs.ReadCombo(truckFleetNum2)
 	if err != nil {
 		return err
 	}
 
-	//Create table if it doesn't exist. Both columns are foreign keys and should be unique
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS combinations (truck_fleet_num TEXT, trailer_fleet_num TEXT, PRIMARY KEY (truck_fleet_num, trailer_fleet_num))")
-	if err != nil {
-		return err
-	}
+	combo1.TrailerFleetNum, combo2.TrailerFleetNum = combo2.TrailerFleetNum, combo1.TrailerFleetNum
 
-	// Check if the truck already has a trailer linked
-	rows, err := db.Query("SELECT trailer_fleet_num FROM combinations WHERE truck_fleet_num = ?", truckFleetNum)
-	if err != nil {
-		return err
-	}
-	defer rows.Close()
-	if rows.Next() {
-		return fmt.Errorf("truck already has a trailer linked")
-	}
-
-	// Add a small delay before the insert to allow other transactions to complete
-	time.Sleep(100 * time.Millisecond)
-
-	//Insert into table
-	_, err = db.Exec("INSERT INTO combinations (truck_fleet_num, trailer_fleet_num) VALUES (?, ?)", truckFleetNum, trailerFleetNum)
+	err = dbFuncs.UpdateCombo(combo1, combo2)
 	if err != nil {
 		return err
 	}
 
 	return nil
-}
-*/
-
-func SwopTruckTrailer(truckFleetNum1, truckFleetNum2, trailerFleetNum1, trailerFleetNum2 string) error {
-	err := checks.CheckExist(truckFleetNum1)
-	if err != nil {
-		return err
-	}
-	err = checks.CheckExist(truckFleetNum2)
-	if err != nil {
-		return err
-	}
-	err = checks.CheckExist(trailerFleetNum1)
-	if err != nil {
-		return err
-	}
-	err = checks.CheckExist(trailerFleetNum2)
-	if err != nil {
-		return err
-	}
-
-	fmt.Println("Swopping truck and trailer")
-	db, err := sql.Open("sqlite3", "./tyrecheck.db?_journal=WAL&_busy_timeout=5000")
-	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	// Enable foreign keys and WAL mode
-	_, err = db.Exec("PRAGMA foreign_keys = ON;")
-	if err != nil {
-		return err
-	}
-
-	// Add a small delay before updates to allow other transactions to complete
-	time.Sleep(100 * time.Millisecond)
-
-	// Check if the old combinations exist
-	rows, err := db.Query("SELECT * FROM combinations WHERE truck_fleet_num = ? AND trailer_fleet_num = ?", truckFleetNum1, trailerFleetNum1)
-	if err != nil {
-		return err
-	}
-	defer rows.Close()
-	if !rows.Next() {
-		return fmt.Errorf("old combinations not found")
-	}
-
-	rows, err = db.Query("SELECT * FROM combinations WHERE truck_fleet_num = ? AND trailer_fleet_num = ?", truckFleetNum2, trailerFleetNum2)
-	if err != nil {
-		return err
-	}
-	defer rows.Close()
-	if !rows.Next() {
-		return fmt.Errorf("old combinations not found")
-	}
-
-	// Update combinations
-	_, err = db.Exec("UPDATE combinations SET trailer_fleet_num = ? WHERE truck_fleet_num = ?", trailerFleetNum2, truckFleetNum1)
-	if err != nil {
-		return err
-	}
-	_, err = db.Exec("UPDATE combinations SET trailer_fleet_num = ? WHERE truck_fleet_num = ?", trailerFleetNum1, truckFleetNum2)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func CheckTruckTrailerCombo(truckFleetNum string) (models.Combination, error) {
-	err := checks.CheckExist(truckFleetNum)
-	if err != nil {
-		return models.Combination{}, err
-	}
-
-	db, err := sql.Open("sqlite3", "./tyrecheck.db?_journal=WAL&_busy_timeout=5000")
-	if err != nil {
-		return models.Combination{}, err
-	}
-	defer db.Close()
-
-	var combo models.Combination
-	err = db.QueryRow("SELECT * FROM combinations WHERE truck_fleet_num = ?", truckFleetNum).Scan(&combo.TruckFleetNum, &combo.TrailerFleetNum)
-	if err != nil {
-		return models.Combination{}, err
-	}
-
-	ConfirmEntry(combo)
-
-	return combo, nil
 }
 
 func AssignTyre(fleetNum string, tyreID string) error {

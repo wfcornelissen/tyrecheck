@@ -19,20 +19,7 @@ var SwopCmd = &cobra.Command{
 	eg truck1, trailer1 and truck2, trailer2
 	becomes truck1, trailer2 and truck2, trailer1`,
 	Run: func(cmd *cobra.Command, args []string) {
-
-		truckFleetNum1 := entries.ReadString("Truck Fleet Number 1: ")
-		combo1, err := entries.CheckTruckTrailerCombo(truckFleetNum1)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		truckFleetNum2 := entries.ReadString("Truck Fleet Number 2: ")
-		combo2, err := entries.CheckTruckTrailerCombo(truckFleetNum2)
-		if err != nil {
-			fmt.Println(err)
-		}
-
-		err = entries.SwopTruckTrailer(combo1.TruckFleetNum, combo2.TruckFleetNum, combo1.TrailerFleetNum, combo2.TrailerFleetNum)
+		err := entries.SwopTruckTrailer()
 		if err != nil {
 			fmt.Println(err)
 		}
