@@ -30,7 +30,7 @@ func CreateTyreEntry(tyre *models.Tyre) error {
 		tyre.StartingTread,
 		tyre.Archived)
 	if err != nil {
-		fmt.Println("Error creating tyre entry")
+		fmt.Println("Error creating tyre entry: ", err)
 		return err
 	}
 

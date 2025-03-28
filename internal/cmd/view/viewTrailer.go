@@ -14,11 +14,7 @@ var trailerCmd = &cobra.Command{
 	Long:  `Displays details of trailer requested according to fleet number.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("trailer called")
-		fleetNum := entries.ReadString("Enter fleet number: ")
-		err := entries.ViewTrailer(fleetNum)
-		if err != nil {
-			fmt.Println("Error viewing trailer:", err)
-		}
+		entries.ViewTrailer()
 	},
 }
 

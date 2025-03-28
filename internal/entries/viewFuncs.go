@@ -5,22 +5,16 @@ import (
 	"fmt"
 	"strings"
 
+	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
-func ViewTrailer(fleetNum string) error {
+func ViewTrailer() error {
 	fmt.Println("ViewTrailer called")
-
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	fleetNum := ReadString("Enter fleet number: ")
+	trailer, err := dbFuncs.ReadTyreID(fleetNum)
 	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	var trailer models.Trailer
-	err = db.QueryRow("SELECT * FROM trailers WHERE fleet_num = ?", fleetNum).Scan(&trailer.FleetNum, &trailer.VIN, &trailer.Reg, &trailer.Make, &trailer.Model, &trailer.Year, &trailer.Scrap)
-	if err != nil {
-		return err
+		fmt.Println("Error viewing trailer:", err)
 	}
 
 	fmt.Println(trailer)
