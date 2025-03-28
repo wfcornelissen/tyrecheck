@@ -27,38 +27,18 @@ func RemoveTrailer() error {
 }
 
 // Finished
-func RemoveTruck(fleetNum string) error {
-	// Open SQLite db
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		return err
-	}
-	defer db.Close()
-
-	// Extract truck into struct variable from db
-	var truck models.Truck
-	err = db.QueryRow("SELECT * FROM trucks WHERE fleet_num = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap)
+func RemoveTruck() error {
+	fleetNum := ReadString("Enter fleet number: ")
+	truck, stmt, err := dbFuncs.DeleteTruck(fleetNum)
 	if err != nil {
 		return err
 	}
 
-	// Check if truck is already removed
-	if truck.Scrap {
-		return fmt.Errorf("truck already removed")
-	}
-
-	// Confirm removal
 	if ConfirmEntry(truck) {
-		truck.Scrap = true
-		_, err = db.Exec("UPDATE trucks SET scrap = true WHERE fleet_num = ?", fleetNum)
-		if err != nil {
-			return err
-		}
-
-		fmt.Println("Truck removed successfully")
-
-		return nil
+		dbFuncs.Delete(stmt)
 	}
+
+	fmt.Println("Truck removed successfully")
 
 	return nil
 }

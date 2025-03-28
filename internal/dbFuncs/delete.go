@@ -50,3 +50,32 @@ func DeleteTrailer(fleetNum string) (models.Trailer, *sql.Stmt, error) {
 
 	return trailer, stmt, nil
 }
+
+func DeleteTruck(fleetNum string) (models.Truck, *sql.Stmt, error) {
+	// Check if truck exists
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return models.Truck{}, nil, err
+	}
+	defer db.Close()
+
+	// Extract truck into struct variable from db
+	var truck models.Truck
+	err = db.QueryRow("SELECT * FROM trucks WHERE fleet_num = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Scrap)
+	if err != nil {
+		fmt.Println("Truck not found")
+		return models.Truck{}, nil, err
+	}
+
+	// Check if truck is already removed
+	if truck.Scrap {
+		return models.Truck{}, nil, fmt.Errorf("truck already removed")
+	}
+
+	stmt, err := db.Prepare("UPDATE trucks SET scrap = true WHERE fleet_num = ?")
+	if err != nil {
+		return models.Truck{}, nil, err
+	}
+
+	return truck, stmt, nil
+}
