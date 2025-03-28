@@ -1,3 +1,6 @@
 With the dbInterRef branch I am trying to keep any changes to attributes in entries and any database interactions in dbFuncs.
 This way it becomes easier to debug and maintain (I hope)
 Furthermore I am trying to remove as much logic from cmd as possible. This will drastically imporve maintainability in case commands need to be changed.
+
+
+When working with fit function, keep in mind var1, var2 = var2, var1 type logic

@@ -9,15 +9,6 @@ import (
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
-/*
-Tyre
-Truck
-Trailer
-Combination
-TyreCheck
-TyreRepair
-*/
-
 func CreateTyreEntry(tyre *models.Tyre) error {
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
