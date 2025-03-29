@@ -90,7 +90,7 @@ func DeleteTyre(tyreID string) (models.Tyre, *sql.Stmt, error) {
 
 	// Extract tyre into struct variable from db
 	var tyre models.Tyre
-	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+	err = db.QueryRow("SELECT * FROM tyres WHERE tyreID = ? ORDER BY created_at DESC LIMIT 1", tyreID).Scan(&tyre.ID, &tyre.TyreID, &tyre.Size, &tyre.Brand, &tyre.Model, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived, &tyre.CreatedAt)
 	if err != nil {
 		fmt.Println("Tyre not found")
 		return models.Tyre{}, nil, err
@@ -100,7 +100,7 @@ func DeleteTyre(tyreID string) (models.Tyre, *sql.Stmt, error) {
 		return models.Tyre{}, nil, fmt.Errorf("tyre already removed")
 	}
 
-	stmt, err := db.Prepare("UPDATE tyres SET archived = true WHERE id = ?")
+	stmt, err := db.Prepare("UPDATE tyres SET archived = true WHERE tyreID = ?")
 	if err != nil {
 		return models.Tyre{}, nil, err
 	}

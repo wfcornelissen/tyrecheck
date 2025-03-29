@@ -13,7 +13,7 @@ func ReadTyreID(tyreID string) (models.Tyre, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM tyres WHERE id = ? ORDER BY rowid DESC LIMIT 1", tyreID)
+	rows, err := db.Query("SELECT * FROM tyres WHERE tyreID = ? ORDER BY created_at DESC LIMIT 1", tyreID)
 	if err != nil {
 		return models.Tyre{}, err
 	}
@@ -22,7 +22,7 @@ func ReadTyreID(tyreID string) (models.Tyre, error) {
 	// Scan the rows into a tyre struct
 	var tyre models.Tyre
 	if rows.Next() {
-		err = rows.Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Model, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+		err = rows.Scan(&tyre.ID, &tyre.TyreID, &tyre.Size, &tyre.Brand, &tyre.Model, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived, &tyre.CreatedAt)
 		if err != nil {
 			return models.Tyre{}, err
 		}
@@ -38,7 +38,7 @@ func ReadTyrePos(tyrePos string) (models.Tyre, error) {
 	}
 	defer db.Close()
 
-	rows, err := db.Query("SELECT * FROM tyres WHERE position = ? ORDER BY rowid DESC LIMIT 1", tyrePos)
+	rows, err := db.Query("SELECT * FROM tyres WHERE position = ? ORDER BY created_at DESC LIMIT 1", tyrePos)
 	if err != nil {
 		return models.Tyre{}, err
 	}
@@ -46,7 +46,7 @@ func ReadTyrePos(tyrePos string) (models.Tyre, error) {
 
 	var tyre models.Tyre
 	if rows.Next() {
-		err = rows.Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Model, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
+		err = rows.Scan(&tyre.ID, &tyre.TyreID, &tyre.Size, &tyre.Brand, &tyre.Model, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived, &tyre.CreatedAt)
 		if err != nil {
 			return models.Tyre{}, err
 		}

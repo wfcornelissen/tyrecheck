@@ -32,7 +32,7 @@ to quickly create a Cobra application.`,
 				fmt.Println("Error fitting tyre:", err)
 			}
 			if entries.ConfirmEntry(tyre) {
-				entries.AssignTyre(truckFleetNum, tyre.ID)
+				entries.AssignTyre(truckFleetNum, tyre.TyreID)
 			}
 		} else if !newOrOld {
 			tyreID := entries.ReadString("Please enter tyre ID: ")

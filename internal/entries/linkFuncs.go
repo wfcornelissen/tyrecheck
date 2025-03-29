@@ -1,10 +1,8 @@
 package entries
 
 import (
-	"database/sql"
 	"fmt"
 	"strconv"
-	"time"
 
 	"github.com/wfcornelissen/tyrecheck/internal/checks"
 	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
@@ -35,7 +33,6 @@ func SwopTruckTrailer() error {
 }
 
 func AssignTyre(fleetNum string, tyreID string) error {
-
 	err := checks.CheckExist(fleetNum)
 	if err != nil {
 		return err
@@ -45,47 +42,30 @@ func AssignTyre(fleetNum string, tyreID string) error {
 		return err
 	}
 
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	// Get the current tyre entry
+	tyre, err := dbFuncs.ReadTyreID(tyreID)
 	if err != nil {
 		return err
 	}
-	defer db.Close()
 
-	var oldTyre models.Tyre
-	err = db.QueryRow("SELECT * FROM tyres WHERE position = ?", fleetNum+tyreID).Scan(&oldTyre.ID, &oldTyre.Size, &oldTyre.Brand, &oldTyre.Supplier, &oldTyre.Price, &oldTyre.Position, &oldTyre.Location, &oldTyre.State, &oldTyre.Condition, &oldTyre.StartingTread, &oldTyre.Archived)
-	if err != nil {
-		if err == sql.ErrNoRows {
-			// No old tyre exists at this position, which is fine
-			fmt.Println("No existing tyre at this position, proceeding with new assignment")
-		} else {
-			fmt.Println("Error getting old tyre for updates:", err)
-		}
-	} else {
+	// If there's an existing tyre at the target position, update its location
+	existingTyre, err := dbFuncs.ReadTyrePos(fleetNum + tyreID)
+	if err == nil {
 		// Only ask for location and update if there was an old tyre
-		oldTyre.Location = ReadString("Enter the location for the old tyre: ")
-		time.Sleep(100 * time.Millisecond)
-		_, err = db.Exec("UPDATE tyres SET location =? WHERE id = ?", oldTyre.Location, oldTyre.ID)
+		existingTyre.Location = ReadString("Enter the location for the old tyre: ")
+		err = dbFuncs.UpdateTyreLocation(existingTyre.TyreID, existingTyre.Location)
 		if err != nil {
 			fmt.Println("Error updating old tyre location:", err)
 		}
 	}
 
-	time.Sleep(100 * time.Millisecond)
-
-	// Extract tyre into struct variable from db
-	var tyre models.Tyre
-	err = db.QueryRow("SELECT * FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Size, &tyre.Brand, &tyre.Supplier, &tyre.Price, &tyre.Position, &tyre.Location, &tyre.State, &tyre.Condition, &tyre.StartingTread, &tyre.Archived)
-	if err != nil {
-		return err
-	}
-
-	tyre.Archived = false
-	tyre.Location = "NULL"
+	// Create a new entry for the tyre with the new position
 	position := ReadInt("Enter the new position of the tyre: ")
 	tyre.Position = fleetNum + strconv.Itoa(position)
+	tyre.Location = "NULL"
+	tyre.Archived = false
 
-	// Update tyre in db
-	_, err = db.Exec("UPDATE tyres SET archived = ?, location = ?, position = ? WHERE id = ?", tyre.Archived, tyre.Location, tyre.Position, tyreID)
+	err = dbFuncs.CreateTyreEntry(&tyre)
 	if err != nil {
 		return err
 	}

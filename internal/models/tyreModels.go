@@ -6,7 +6,8 @@ import (
 )
 
 type Tyre struct {
-	ID            string  `db:"id" sqlite:"TEXT PRIMARY KEY UNIQUE"`
+	ID            int     `db:"id" sqlite:"INTEGER PRIMARY KEY AUTOINCREMENT"`
+	TyreID        string  `db:"tyreID" sqlite:"TEXT NOT NULL"`
 	Size          int     `db:"size" sqlite:"INTEGER"`
 	Brand         string  `db:"brand" sqlite:"TEXT"`
 	Model         string  `db:"model" sqlite:"TEXT"`
@@ -18,6 +19,7 @@ type Tyre struct {
 	Condition     int     `db:"condition" sqlite:"INTEGER"`
 	StartingTread float64 `db:"startingTread" sqlite:"REAL"`
 	Archived      bool    `db:"archived" sqlite:"BOOLEAN"`
+	CreatedAt     string  `db:"created_at" sqlite:"TIMESTAMP"`
 }
 
 var TyreState = map[int]string{
@@ -52,7 +54,7 @@ type TyreWork struct {
 }
 
 func (t Tyre) String() string {
-	return fmt.Sprintf("Tyre ID: %s\nSize: %d\nBrand: %s\nModel: %s\nSupplier: %s\nPrice: %2f\nPosition: %s\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f", t.ID, t.Size, t.Brand, t.Model, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread)
+	return fmt.Sprintf("Tyre ID: %s\nSize: %d\nBrand: %s\nModel: %s\nSupplier: %s\nPrice: %2f\nPosition: %s\nLocation: %s\nState: %s\nCondition: %d\nStarting Tread: %f\nCreated At: %s", t.TyreID, t.Size, t.Brand, t.Model, t.Supplier, t.Price, t.Position, t.Location, t.State, t.Condition, t.StartingTread, t.CreatedAt)
 }
 func (t Tyre) SetPosition(position string) {
 	t.Position = position

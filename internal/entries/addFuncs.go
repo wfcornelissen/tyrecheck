@@ -69,7 +69,7 @@ func AddTruck() (models.Truck, error) {
 func AddTyre() (models.Tyre, error) {
 	fmt.Println("tyre called")
 	tyre := models.Tyre{
-		ID:            ReadString("Tyre ID: "),
+		TyreID:        ReadString("Tyre ID: "),
 		Size:          ReadInt("Tyre Size: "),
 		Brand:         ReadString("Tyre Brand: "),
 		Model:         ReadString("Tyre Model: "),

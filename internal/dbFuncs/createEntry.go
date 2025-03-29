@@ -17,8 +17,8 @@ func CreateTyreEntry(tyre *models.Tyre) error {
 	}
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO tyres (id, size, brand, model, supplier, price, position, location, state, condition, startingTread, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-		tyre.ID,
+	_, err = db.Exec("INSERT INTO tyres (tyreID, size, brand, model, supplier, price, position, location, state, condition, startingTread, archived) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+		tyre.TyreID,
 		tyre.Size,
 		tyre.Brand,
 		tyre.Model,
@@ -31,9 +31,9 @@ func CreateTyreEntry(tyre *models.Tyre) error {
 		tyre.StartingTread,
 		tyre.Archived)
 	if err != nil {
-		if err.Error() == "UNIQUE constraint failed: tyres.id" {
+		if err.Error() == "UNIQUE constraint failed: tyres.tyreID" {
 			fmt.Println("--------------------------------")
-			fmt.Println("Tyre with this id already exists")
+			fmt.Println("Tyre with this ID already exists")
 			fmt.Println("--------------------------------")
 			return errors.New("tyreid already exists")
 		} else {
@@ -43,7 +43,6 @@ func CreateTyreEntry(tyre *models.Tyre) error {
 	}
 
 	fmt.Println("Tyre entry created")
-
 	return nil
 }
 

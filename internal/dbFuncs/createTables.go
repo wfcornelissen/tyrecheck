@@ -79,7 +79,8 @@ func CreateTables() error {
 
 func CreateTyresTable(db *sql.DB) error {
 	tyresTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS tyres (
-		id TEXT PRIMARY KEY,
+		id INTEGER PRIMARY KEY AUTOINCREMENT,
+		tyreID TEXT NOT NULL,
 		size INTEGER,
 		brand TEXT,
 		model TEXT,
@@ -90,7 +91,8 @@ func CreateTyresTable(db *sql.DB) error {
 		state TEXT,
 		condition INTEGER,
 		startingTread REAL,
-		archived BOOLEAN
+		archived BOOLEAN,
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	)`)
 	if err != nil {
 		fmt.Println("Error preparing table creation:", err)
