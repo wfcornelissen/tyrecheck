@@ -33,8 +33,7 @@ func UpdateTyreCondition(tyreID string, condition int) error {
 	}
 	defer db.Close()
 
-	// Create a new entry with updated condition
-	_, err = db.Exec("INSERT INTO tyres (tyreID, size, brand, model, supplier, price, position, location, state, condition, startingTread, archived) SELECT tyreID, size, brand, model, supplier, price, position, location, state, ?, startingTread, archived FROM tyres WHERE tyreID = ? ORDER BY created_at DESC LIMIT 1", condition, tyreID)
+	_, err = db.Exec("UPDATE tyres SET condition = ? WHERE tyreID = ?", condition, tyreID)
 	if err != nil {
 		return err
 	}
@@ -49,8 +48,7 @@ func UpdateTyreLocation(tyreID string, location string) error {
 	}
 	defer db.Close()
 
-	// Create a new entry with updated location
-	_, err = db.Exec("INSERT INTO tyres (tyreID, size, brand, model, supplier, price, position, location, state, condition, startingTread, archived) SELECT tyreID, size, brand, model, supplier, price, position, ?, state, condition, startingTread, archived FROM tyres WHERE tyreID = ? ORDER BY created_at DESC LIMIT 1", location, tyreID)
+	_, err = db.Exec("UPDATE tyres SET location = ? WHERE tyreID = ?", location, tyreID)
 	if err != nil {
 		return err
 	}
@@ -65,8 +63,7 @@ func UpdateTyrePosition(tyreID string, position string) error {
 	}
 	defer db.Close()
 
-	// Create a new entry with updated position
-	_, err = db.Exec("INSERT INTO tyres (tyreID, size, brand, model, supplier, price, position, location, state, condition, startingTread, archived) SELECT tyreID, size, brand, model, supplier, price, ?, location, state, condition, startingTread, archived FROM tyres WHERE tyreID = ? ORDER BY created_at DESC LIMIT 1", position, tyreID)
+	_, err = db.Exec("UPDATE tyres SET position = ? WHERE tyreID = ?", position, tyreID)
 	if err != nil {
 		return err
 	}
@@ -81,8 +78,7 @@ func UpdateTyreState(tyreID string, state string) error {
 	}
 	defer db.Close()
 
-	// Create a new entry with updated state
-	_, err = db.Exec("INSERT INTO tyres (tyreID, size, brand, model, supplier, price, position, location, state, condition, startingTread, archived) SELECT tyreID, size, brand, model, supplier, price, position, location, ?, condition, startingTread, archived FROM tyres WHERE tyreID = ? ORDER BY created_at DESC LIMIT 1", state, tyreID)
+	_, err = db.Exec("UPDATE tyres SET state = ? WHERE tyreID = ?", state, tyreID)
 	if err != nil {
 		return err
 	}

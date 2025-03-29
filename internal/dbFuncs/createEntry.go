@@ -174,7 +174,7 @@ func CreateRetreadSentEntry(retreadSent *models.Tyre, WorkDate time.Time, Odo in
 	defer db.Close()
 
 	_, err = db.Exec("INSERT INTO retreadSent (id, tyreID, workDate, position, odo) VALUES (?, ?, ?, ?, ?)",
-		retreadSent.ID,
+		retreadSent.TyreID,
 		WorkDate,
 		Odo)
 
@@ -196,7 +196,7 @@ func CreateRetreadReceivedEntry(retreadReceived *models.Tyre, WorkDate time.Time
 	defer db.Close()
 
 	_, err = db.Exec("INSERT INTO retreadReceived (id, tyreID, dateReceived, odo) VALUES (?, ?, ?, ?)",
-		retreadReceived.ID,
+		retreadReceived.TyreID,
 		WorkDate,
 		Odo)
 
@@ -218,7 +218,7 @@ func CreateRetreadScrapEntry(retreadScrap *models.Tyre, WorkDate time.Time, Odo 
 	defer db.Close()
 
 	_, err = db.Exec("INSERT INTO retreadScrap (id, tyreID, dateScraped, odo) VALUES (?, ?, ?, ?)",
-		retreadScrap.ID,
+		retreadScrap.TyreID,
 		WorkDate,
 		Odo)
 

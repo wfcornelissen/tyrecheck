@@ -17,7 +17,7 @@ func EditCondition() error {
 		return err
 	}
 
-	tyre.Condition = int((1 - (tyre.StartingTread - float64(condition))) * 100)
+	tyre.Condition = condition
 
 	err = dbFuncs.UpdateTyreCondition(tyreID, tyre.Condition)
 	if err != nil {

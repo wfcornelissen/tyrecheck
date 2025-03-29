@@ -83,8 +83,6 @@ func AddTyre() (models.Tyre, error) {
 		Archived:      false,
 	}
 
-	tyre.Condition = int((1 - (tyre.StartingTread - float64(tyre.Condition))) * 100)
-
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()
 		if err != nil {

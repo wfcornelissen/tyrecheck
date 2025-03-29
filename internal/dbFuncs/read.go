@@ -2,6 +2,7 @@ package dbFuncs
 
 import (
 	"database/sql"
+	"os"
 
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
@@ -85,4 +86,28 @@ func ReadCombo(truckFleetNum string) (models.Combination, error) {
 	}
 
 	return combo, nil
+}
+
+// ReadTrailerID reads a trailer by its fleet number
+func ReadTrailerID(fleetNum string) (*models.Trailer, error) {
+	db, err := sql.Open("sqlite3", os.Getenv("TYRECHECK_DB"))
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+
+	var trailer models.Trailer
+	err = db.QueryRow(`
+		SELECT fleetNum, VIN, reg, make, model, year, scrap, archived
+		FROM trailers
+		WHERE fleetNum = ? AND archived = 0
+		ORDER BY id DESC
+		LIMIT 1
+	`, fleetNum).Scan(&trailer.FleetNum, &trailer.VIN, &trailer.Reg, &trailer.Make, &trailer.Model, &trailer.Year, &trailer.Scrap, &trailer.Archived)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &trailer, nil
 }

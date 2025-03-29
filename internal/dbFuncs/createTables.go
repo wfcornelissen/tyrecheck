@@ -3,7 +3,6 @@ package dbFuncs
 import (
 	"database/sql"
 	"fmt"
-	"time"
 
 	_ "github.com/mattn/go-sqlite3"
 )
@@ -20,55 +19,46 @@ func CreateTables() error {
 		return err
 	}
 	fmt.Println("Tyres table created")
-	time.Sleep(1 * time.Second)
 	err = CreateTrucksTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Trucks table created")
-	time.Sleep(1 * time.Second)
 	err = CreateTrailersTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Trailers table created")
-	time.Sleep(1 * time.Second)
 	err = CreateCombinationTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Combinations table created")
-	time.Sleep(1 * time.Second)
 	err = CreateTyreCheckTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Tyre checks table created")
-	time.Sleep(1 * time.Second)
 	err = CreateTyreRepairTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Tyre repairs table created")
-	time.Sleep(1 * time.Second)
 	err = CreateRetreadSentTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Retread sent table created")
-	time.Sleep(1 * time.Second)
 	err = CreateRetreadReceivedTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Retread received table created")
-	time.Sleep(1 * time.Second)
 	err = CreateRetreadScrapTable(db)
 	if err != nil {
 		return err
 	}
 	fmt.Println("Retread scrap table created")
-	time.Sleep(1 * time.Second)
 	err = CreateTyreRotateTable(db)
 	if err != nil {
 		return err
