@@ -55,3 +55,18 @@ func UpdateTyreLocation(tyreID string, location string) error {
 
 	return nil
 }
+
+func UpdateTyrePosition(tyreID string, position string) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	_, err = db.Exec("UPDATE tyres SET position = ? WHERE id = ?", position, tyreID)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}

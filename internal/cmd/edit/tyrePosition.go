@@ -12,8 +12,7 @@ var PositionCmd = &cobra.Command{
 	Long: `Used as a subcommand for edit.
 	Calls the tyre position entry function which asks for the tyre position.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		TyreID := entries.ReadString("Enter the tyre ID: ")
-		entries.EditPosition(TyreID)
+		entries.EditPosition()
 	},
 }
 

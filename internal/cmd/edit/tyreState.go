@@ -12,8 +12,7 @@ var StateCmd = &cobra.Command{
 	Long: `Used as a subcommand for edit.
 	Calls the tyre state entry function which asks for the tyre state.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		TyreID := entries.ReadString("Enter the tyre ID: ")
-		entries.EditState(TyreID)
+		entries.EditState()
 	},
 }
 
