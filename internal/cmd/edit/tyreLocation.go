@@ -12,8 +12,7 @@ var LocationCmd = &cobra.Command{
 	Long: `Used as a subcommand for edit.
 	Calls the tyre location entry function which asks for the tyre location.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		TyreID := entries.ReadString("Enter the tyre ID: ")
-		entries.EditLocation(TyreID)
+		entries.EditLocation()
 	},
 }
 

@@ -29,38 +29,21 @@ func EditCondition() error {
 }
 
 // Finished
-func EditLocation(tyreID string) error {
-	//Receives a tyre and retrieves it from the database
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
+func EditLocation() error {
+	tyreID := ReadString("Enter the tyre ID: ")
+	location := ReadString("Enter the new location: ")
 
-	//Retrieves the tyre from the database and stores it in a struct variable
-	var tyre models.Tyre
-	err = db.QueryRow("SELECT id, condition, location, position, state FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Condition, &tyre.Location, &tyre.Position, &tyre.State)
+	tyre, err := dbFuncs.ReadTyreID(tyreID)
 	if err != nil {
-		fmt.Println("Error retrieving tyre:", err)
 		return err
 	}
 
-	// Prints the current location
-	fmt.Println("Current Location: ", tyre.Location)
+	tyre.Location = location
 
-	// Prompts the user to enter a new location
-	tyre.Location = ReadString("Enter new location: ")
-
-	// Updates the tyre in the database
-	_, err = db.Exec("UPDATE tyres SET location = ? WHERE id = ?", tyre.Location, tyreID)
+	err = dbFuncs.UpdateTyreLocation(tyreID, tyre.Location)
 	if err != nil {
-		fmt.Println("Error updating tyre:", err)
 		return err
 	}
-
-	// Confirms the update
-	fmt.Println("Tyre updated successfully")
 
 	return nil
 }
