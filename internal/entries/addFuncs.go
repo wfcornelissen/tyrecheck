@@ -72,6 +72,7 @@ func AddTyre() (models.Tyre, error) {
 		ID:            ReadString("Tyre ID: "),
 		Size:          ReadInt("Tyre Size: "),
 		Brand:         ReadString("Tyre Brand: "),
+		Model:         ReadString("Tyre Model: "),
 		Supplier:      ReadString("Tyre Supplier: "),
 		Price:         ReadFloat("Tyre Price: "),
 		Position:      ReadString("Tyre Position: "),
@@ -91,6 +92,13 @@ func AddTyre() (models.Tyre, error) {
 
 	err := dbFuncs.CreateTyreEntry(&tyre)
 	if err != nil {
+		if err.Error() == "tyreid already exists" {
+			tyre, err := AddTyre()
+			if err != nil {
+				return models.Tyre{}, err
+			}
+			return tyre, nil
+		}
 		return models.Tyre{}, err
 	}
 	return tyre, nil

@@ -2,6 +2,7 @@ package dbFuncs
 
 import (
 	"database/sql"
+	"errors"
 	"fmt"
 	"time"
 
@@ -30,8 +31,15 @@ func CreateTyreEntry(tyre *models.Tyre) error {
 		tyre.StartingTread,
 		tyre.Archived)
 	if err != nil {
-		fmt.Println("Error creating tyre entry: ", err)
-		return err
+		if err.Error() == "UNIQUE constraint failed: tyres.id" {
+			fmt.Println("--------------------------------")
+			fmt.Println("Tyre with this id already exists")
+			fmt.Println("--------------------------------")
+			return errors.New("tyreid already exists")
+		} else {
+			fmt.Println("Error creating tyre entry: ")
+			return err
+		}
 	}
 
 	fmt.Println("Tyre entry created")
