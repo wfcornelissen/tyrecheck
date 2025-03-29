@@ -4,44 +4,26 @@ import (
 	"database/sql"
 	"fmt"
 
+	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
 
 // Finished
-func EditCondition(tyreID string) error {
-	//Receives a tyre and retrieves it from the database
-	db, err := sql.Open("sqlite3", "./tyrecheck.db")
-	if err != nil {
-		fmt.Println("Error opening database:", err)
-		return err
-	}
-	defer db.Close()
+func EditCondition() error {
+	tyreID := ReadString("Enter the tyre ID: ")
+	condition := ReadInt("Enter the new condition (mm tread depth): ")
 
-	//Retrieves the tyre from the database
-	var tyre models.Tyre
-	err = db.QueryRow("SELECT id, condition, location, position, state FROM tyres WHERE id = ?", tyreID).Scan(&tyre.ID, &tyre.Condition, &tyre.Location, &tyre.Position, &tyre.State)
+	tyre, err := dbFuncs.ReadTyreID(tyreID)
 	if err != nil {
-		fmt.Println("Error retrieving tyre:", err)
 		return err
 	}
 
-	// Stores the tyre in a struct variable
-	fmt.Println("Current Condition: ", tyre.Condition)
-	newCondition := ReadInt("Enter new condition: ")
-	if !ConfirmEntry(newCondition) {
-		EditCondition(tyreID)
-	}
+	tyre.Condition = int((1 - (tyre.StartingTread - float64(condition))) * 100)
 
-	// Updates the tyre in the database
-	_, err = db.Exec("UPDATE tyres SET condition = ? WHERE id = ?", newCondition, tyreID)
+	err = dbFuncs.UpdateTyreCondition(tyre.Condition)
 	if err != nil {
-		fmt.Println("Error updating tyre:", err)
 		return err
 	}
-
-	// Confirms the update
-	fmt.Println("Tyre updated successfully")
-
 	return nil
 }
 

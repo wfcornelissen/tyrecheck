@@ -25,3 +25,12 @@ func UpdateCombo(combo1, combo2 models.Combination) error {
 
 	return nil
 }
+
+func UpdateTyreCondition(condition int) error {
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+	return nil
+}

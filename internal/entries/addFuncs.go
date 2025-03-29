@@ -78,10 +78,13 @@ func AddTyre() (models.Tyre, error) {
 		Position:      ReadString("Tyre Position: "),
 		Location:      ReadString("Tyre Location: "),
 		State:         ReadString("Tyre State: "),
-		Condition:     ReadInt("Tyre Condition: "),
-		StartingTread: ReadFloat("Tyre Starting Tread: "),
+		Condition:     ReadInt("Tyre Condition (mm tread depth): "),
+		StartingTread: ReadFloat("Tyre Starting Tread (mm): "),
 		Archived:      false,
 	}
+
+	tyre.Condition = int((1 - (tyre.StartingTread - float64(tyre.Condition))) * 100)
+
 	if !ConfirmEntry(tyre) {
 		tyre, err := AddTyre()
 		if err != nil {

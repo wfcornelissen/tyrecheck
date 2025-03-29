@@ -12,8 +12,7 @@ var ConditionCmd = &cobra.Command{
 	Long: `Used as a subcommand for edit.
 	Calls the tyre condition entry function which asks for the tyre condition.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		TyreID := entries.ReadString("Enter the tyre ID: ")
-		entries.EditCondition(TyreID)
+		entries.EditCondition()
 	},
 }
 
