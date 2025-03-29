@@ -26,11 +26,17 @@ func UpdateCombo(combo1, combo2 models.Combination) error {
 	return nil
 }
 
-func UpdateTyreCondition(condition int) error {
+func UpdateTyreCondition(tyreID string, condition int) error {
 	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
 		return err
 	}
 	defer db.Close()
+
+	_, err = db.Exec("UPDATE tyres SET condition = ? WHERE id = ?", condition, tyreID)
+	if err != nil {
+		return err
+	}
+
 	return nil
 }
