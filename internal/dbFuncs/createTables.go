@@ -100,11 +100,14 @@ func CreateTyresTable(db *sql.DB) error {
 
 func CreateTrucksTable(db *sql.DB) error {
 	trucksTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS trucks (	
-		id TEXT PRIMARY KEY UNIQUE,
+		fleetnum TEXT PRIMARY KEY UNIQUE,
+		vin TEXT,
+		reg TEXT,
 		make TEXT,
 		model TEXT,
 		year INTEGER,
-		registration TEXT,
+		odo INTEGER,
+		scrap BOOLEAN,
 		archived BOOLEAN
 		)`)
 	if err != nil {
@@ -123,11 +126,13 @@ func CreateTrucksTable(db *sql.DB) error {
 
 func CreateTrailersTable(db *sql.DB) error {
 	trailersTable, err := db.Prepare(`CREATE TABLE IF NOT EXISTS trailers (
-		id TEXT PRIMARY KEY UNIQUE,
+		fleetnum TEXT PRIMARY KEY UNIQUE,
+		vin TEXT,
+		reg TEXT,
 		make TEXT,
 		model TEXT,
 		year INTEGER,
-		registration TEXT,
+		scrap BOOLEAN,
 		archived BOOLEAN
 	)`)
 	if err != nil {

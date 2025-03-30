@@ -70,7 +70,6 @@ func EditPosition() error {
 // Finished
 func EditState() error {
 	tyreID := ReadString("Enter the tyre ID: ")
-	state := ReadInt("Enter the new state by selecting the number: ")
 	for i := 0; i < len(models.TyreState); i++ {
 		fmt.Println(i, models.TyreState[i])
 	}
@@ -80,6 +79,7 @@ func EditState() error {
 		return err
 	}
 
+	state := ReadInt("Enter the new state by selecting the number: ")
 	tyre.State = models.TyreState[state]
 
 	err = dbFuncs.UpdateTyreState(tyreID, tyre.State)

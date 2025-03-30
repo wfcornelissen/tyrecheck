@@ -9,7 +9,7 @@ import (
 func ViewTrailer() error {
 	fmt.Println("ViewTrailer called")
 	fleetNum := ReadString("Enter fleet number: ")
-	trailer, err := dbFuncs.ReadTyreID(fleetNum)
+	trailer, err := dbFuncs.ReadTrailerID(fleetNum)
 	if err != nil {
 		fmt.Println("Error viewing trailer:", err)
 	}
