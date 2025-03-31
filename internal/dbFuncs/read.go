@@ -64,7 +64,7 @@ func ReadTruckID(fleetNum string) (models.Truck, error) {
 	defer db.Close()
 
 	var truck models.Truck
-	err = db.QueryRow("SELECT * FROM trucks WHERE fleet_num = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap)
+	err = db.QueryRow("SELECT * FROM trucks WHERE fleetnum = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap)
 	if err != nil {
 		return models.Truck{}, err
 	}
@@ -80,7 +80,7 @@ func ReadCombo(truckFleetNum string) (models.Combination, error) {
 	defer db.Close()
 
 	var combo models.Combination
-	err = db.QueryRow("SELECT * FROM combinations WHERE truck_fleet_num = ?", truckFleetNum).Scan(&combo.TruckFleetNum, &combo.TrailerFleetNum)
+	err = db.QueryRow("SELECT * FROM combinations WHERE fleetnum = ?", truckFleetNum).Scan(&combo.TruckFleetNum, &combo.TrailerFleetNum)
 	if err != nil {
 		return models.Combination{}, err
 	}
