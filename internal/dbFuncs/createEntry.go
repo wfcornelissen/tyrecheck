@@ -105,7 +105,7 @@ func CreateCombinationEntry(combination *models.Combination) error {
 	}
 	defer db.Close()
 
-	_, err = db.Exec("INSERT INTO combinations (truckFleetNum, trailerFleetNum) VALUES (?, ?)",
+	_, err = db.Exec("INSERT INTO combinations (truck_id, trailer_id) VALUES (?, ?)",
 		combination.TruckFleetNum,
 		combination.TrailerFleetNum)
 	if err != nil {

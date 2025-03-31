@@ -1,6 +1,8 @@
 package entries
 
 import (
+	"strconv"
+
 	"github.com/wfcornelissen/tyrecheck/internal/dbFuncs"
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
@@ -34,10 +36,11 @@ func AssignTyre() error {
 	if err != nil {
 		return err
 	}
-	vehicleFleetNum := ("Please enter vehicle fleet number: ")
-	position := tyre.Position
+
+	vehicleFleetNum := ReadString("Please enter vehicle fleet number: ")
+	position := ReadInt("Please enter position: ")
 	tyre.Location = "Fitted"
-	tyre.Position = vehicleFleetNum + position
+	tyre.Position = vehicleFleetNum + strconv.Itoa(position)
 
 	err = dbFuncs.CreateTyreEntry(&tyre)
 	if err != nil {
