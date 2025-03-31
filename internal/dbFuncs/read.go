@@ -2,7 +2,6 @@ package dbFuncs
 
 import (
 	"database/sql"
-	"os"
 
 	"github.com/wfcornelissen/tyrecheck/internal/models"
 )
@@ -64,7 +63,7 @@ func ReadTruckID(fleetNum string) (models.Truck, error) {
 	defer db.Close()
 
 	var truck models.Truck
-	err = db.QueryRow("SELECT * FROM trucks WHERE fleetnum = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap)
+	err = db.QueryRow("SELECT * FROM trucks WHERE fleetnum = ?", fleetNum).Scan(&truck.FleetNum, &truck.VIN, &truck.Reg, &truck.Make, &truck.Model, &truck.Year, &truck.Odo, &truck.Scrap, &truck.Archived)
 	if err != nil {
 		return models.Truck{}, err
 	}
@@ -90,7 +89,7 @@ func ReadCombo(truckFleetNum string) (models.Combination, error) {
 
 // ReadTrailerID reads a trailer by its fleet number
 func ReadTrailerID(fleetNum string) (*models.Trailer, error) {
-	db, err := sql.Open("sqlite3", os.Getenv("TYRECHECK_DB"))
+	db, err := sql.Open("sqlite3", "./tyrecheck.db")
 	if err != nil {
 		return nil, err
 	}
@@ -98,11 +97,9 @@ func ReadTrailerID(fleetNum string) (*models.Trailer, error) {
 
 	var trailer models.Trailer
 	err = db.QueryRow(`
-		SELECT fleetNum, VIN, reg, make, model, year, scrap, archived
+		SELECT *
 		FROM trailers
-		WHERE fleetNum = ? AND archived = 0
-		ORDER BY id DESC
-		LIMIT 1
+		WHERE fleetNum = ? 
 	`, fleetNum).Scan(&trailer.FleetNum, &trailer.VIN, &trailer.Reg, &trailer.Make, &trailer.Model, &trailer.Year, &trailer.Scrap, &trailer.Archived)
 
 	if err != nil {
